@@ -1,1 +1,0 @@
-rclpy;geometry_msgs;nav_msgs;sensor_msgs;rosgraph_msgs;tf2_ros;robot_state_publisher;rviz2;launch;launch_ros;ament_index_python

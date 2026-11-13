@@ -1,1 +1,0 @@
-/home/gahan/sysmic_ws/build/sysmic_sim/ament_cmake_environment_hooks/local_setup.sh
