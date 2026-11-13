@@ -1,0 +1,217 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mujoco model="sysmic_v2">
+  <compiler angle="radian" />
+
+  <asset>
+    <mesh name="base_link_visual" content_type="model/stl" file="../description/models/sysmic_v2/meshes/base_link_visual.stl" />
+    <mesh name="base_link_collision" content_type="model/stl" file="../description/models/sysmic_v2/meshes/base_link_collision.stl" />
+    <mesh name="caster_FL_swivel_link_visual" content_type="model/stl" file="../description/models/sysmic_v2/meshes/caster_FL_swivel_link_visual.stl" />
+    <mesh name="caster_FL_swivel_link_collision" content_type="model/stl" file="../description/models/sysmic_v2/meshes/caster_FL_swivel_link_collision.stl" />
+    <mesh name="caster_FL_wheel_link_visual" content_type="model/stl" file="../description/models/sysmic_v2/meshes/caster_FL_wheel_link_visual.stl" />
+    <mesh name="caster_FR_swivel_link_visual" content_type="model/stl" file="../description/models/sysmic_v2/meshes/caster_FR_swivel_link_visual.stl" />
+    <mesh name="caster_FR_swivel_link_collision" content_type="model/stl" file="../description/models/sysmic_v2/meshes/caster_FR_swivel_link_collision.stl" />
+    <mesh name="caster_FR_wheel_link_visual" content_type="model/stl" file="../description/models/sysmic_v2/meshes/caster_FR_wheel_link_visual.stl" />
+    <mesh name="caster_RL_swivel_link_visual" content_type="model/stl" file="../description/models/sysmic_v2/meshes/caster_RL_swivel_link_visual.stl" />
+    <mesh name="caster_RL_swivel_link_collision" content_type="model/stl" file="../description/models/sysmic_v2/meshes/caster_RL_swivel_link_collision.stl" />
+    <mesh name="caster_RL_wheel_link_visual" content_type="model/stl" file="../description/models/sysmic_v2/meshes/caster_RL_wheel_link_visual.stl" />
+    <mesh name="caster_RR_swivel_link_visual" content_type="model/stl" file="../description/models/sysmic_v2/meshes/caster_RR_swivel_link_visual.stl" />
+    <mesh name="caster_RR_swivel_link_collision" content_type="model/stl" file="../description/models/sysmic_v2/meshes/caster_RR_swivel_link_collision.stl" />
+    <mesh name="caster_RR_wheel_link_visual" content_type="model/stl" file="../description/models/sysmic_v2/meshes/caster_RR_wheel_link_visual.stl" />
+    <mesh name="left_jaw_visual" content_type="model/stl" file="../description/models/sysmic_v2/meshes/left_jaw_visual.stl" />
+    <mesh name="left_jaw_collision" content_type="model/stl" file="../description/models/sysmic_v2/meshes/left_jaw_collision.stl" />
+    <mesh name="left_link0_visual" content_type="model/stl" file="../description/models/sysmic_v2/meshes/left_link0_visual.stl" />
+    <mesh name="left_link0_collision" content_type="model/stl" file="../description/models/sysmic_v2/meshes/left_link0_collision.stl" />
+    <mesh name="left_link1_visual" content_type="model/stl" file="../description/models/sysmic_v2/meshes/left_link1_visual.stl" />
+    <mesh name="left_link1_collision" content_type="model/stl" file="../description/models/sysmic_v2/meshes/left_link1_collision.stl" />
+    <mesh name="left_link2_visual" content_type="model/stl" file="../description/models/sysmic_v2/meshes/left_link2_visual.stl" />
+    <mesh name="left_link2_collision" content_type="model/stl" file="../description/models/sysmic_v2/meshes/left_link2_collision.stl" />
+    <mesh name="left_link3_visual" content_type="model/stl" file="../description/models/sysmic_v2/meshes/left_link3_visual.stl" />
+    <mesh name="left_link3_collision" content_type="model/stl" file="../description/models/sysmic_v2/meshes/left_link3_collision.stl" />
+    <mesh name="left_link4_visual" content_type="model/stl" file="../description/models/sysmic_v2/meshes/left_link4_visual.stl" />
+    <mesh name="left_link4_collision" content_type="model/stl" file="../description/models/sysmic_v2/meshes/left_link4_collision.stl" />
+    <mesh name="left_link5_visual" content_type="model/stl" file="../description/models/sysmic_v2/meshes/left_link5_visual.stl" />
+    <mesh name="left_link5_collision" content_type="model/stl" file="../description/models/sysmic_v2/meshes/left_link5_collision.stl" />
+    <mesh name="lift_carriage_link_visual" content_type="model/stl" file="../description/models/sysmic_v2/meshes/lift_carriage_link_visual.stl" />
+    <mesh name="lift_carriage_link_collision" content_type="model/stl" file="../description/models/sysmic_v2/meshes/lift_carriage_link_collision.stl" />
+    <mesh name="right_jaw_visual" content_type="model/stl" file="../description/models/sysmic_v2/meshes/right_jaw_visual.stl" />
+    <mesh name="right_jaw_collision" content_type="model/stl" file="../description/models/sysmic_v2/meshes/right_jaw_collision.stl" />
+    <mesh name="right_link0_visual" content_type="model/stl" file="../description/models/sysmic_v2/meshes/right_link0_visual.stl" />
+    <mesh name="right_link0_collision" content_type="model/stl" file="../description/models/sysmic_v2/meshes/right_link0_collision.stl" />
+    <mesh name="right_link1_visual" content_type="model/stl" file="../description/models/sysmic_v2/meshes/right_link1_visual.stl" />
+    <mesh name="right_link1_collision" content_type="model/stl" file="../description/models/sysmic_v2/meshes/right_link1_collision.stl" />
+    <mesh name="right_link2_visual" content_type="model/stl" file="../description/models/sysmic_v2/meshes/right_link2_visual.stl" />
+    <mesh name="right_link2_collision" content_type="model/stl" file="../description/models/sysmic_v2/meshes/right_link2_collision.stl" />
+    <mesh name="right_link3_visual" content_type="model/stl" file="../description/models/sysmic_v2/meshes/right_link3_visual.stl" />
+    <mesh name="right_link3_collision" content_type="model/stl" file="../description/models/sysmic_v2/meshes/right_link3_collision.stl" />
+    <mesh name="right_link4_visual" content_type="model/stl" file="../description/models/sysmic_v2/meshes/right_link4_visual.stl" />
+    <mesh name="right_link4_collision" content_type="model/stl" file="../description/models/sysmic_v2/meshes/right_link4_collision.stl" />
+    <mesh name="right_link5_visual" content_type="model/stl" file="../description/models/sysmic_v2/meshes/right_link5_visual.stl" />
+    <mesh name="right_link5_collision" content_type="model/stl" file="../description/models/sysmic_v2/meshes/right_link5_collision.stl" />
+    <mesh name="wheel_left_link_visual" content_type="model/stl" file="../description/models/sysmic_v2/meshes/wheel_left_link_visual.stl" />
+    <mesh name="wheel_right_link_visual" content_type="model/stl" file="../description/models/sysmic_v2/meshes/wheel_right_link_visual.stl" />
+  </asset>
+
+  <worldbody>
+    <body name="base_link">
+      <inertial pos="-0.0454402 0.00118309 0.376343" quat="0.989575 -0.0055128 -0.143186 0.0144314" mass="33.1856" diaginertia="3.49718 3.4763 1.24548" />
+      <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.25 0.25 0.27 1" mesh="base_link_visual" />
+      <geom type="mesh" rgba="0.25 0.25 0.27 1" mesh="base_link_collision" />
+      <body name="caster_FL_swivel_link" pos="0.21 0.21 0.084">
+        <inertial pos="-0.0169583 0.00111304 -0.0188326" quat="0.962382 0.0212555 0.268699 -0.0342146" mass="0.107413" diaginertia="9.64603e-05 8.95808e-05 2.81483e-05" />
+        <joint name="caster_FL_swivel_joint" pos="0 0 0" axis="0 0 1" damping="0.005" />
+        <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.15 0.15 0.15 1" mesh="caster_FL_swivel_link_visual" />
+        <geom type="mesh" rgba="0.15 0.15 0.15 1" mesh="caster_FL_swivel_link_collision" />
+        <body name="caster_FL_wheel_link" pos="-0.03 0.0125 -0.0465">
+          <inertial pos="-1.38205e-10 -0.0125 0" quat="0.707107 0 0 0.707107" mass="0.153476" diaginertia="8.88822e-05 5.35007e-05 5.35007e-05" />
+          <joint name="caster_FL_wheel_joint" pos="0 0 0" axis="0 1 0" damping="0.005" />
+          <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.08 0.08 0.08 1" mesh="caster_FL_wheel_link_visual" />
+          <geom name="caster_FL_wheel_link_contact" size="0.0375 0.0125" pos="0 -0.0125 0" quat="0.707107 0.707107 0 0" type="cylinder" rgba="0.08 0.08 0.08 1" />
+        </body>
+      </body>
+      <body name="caster_FR_swivel_link" pos="0.21 -0.21 0.084">
+        <inertial pos="-0.0169583 0.00111304 -0.0188326" quat="0.962382 0.0212555 0.268699 -0.0342146" mass="0.107413" diaginertia="9.64603e-05 8.95808e-05 2.81483e-05" />
+        <joint name="caster_FR_swivel_joint" pos="0 0 0" axis="0 0 1" damping="0.005" />
+        <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.15 0.15 0.15 1" mesh="caster_FR_swivel_link_visual" />
+        <geom type="mesh" rgba="0.15 0.15 0.15 1" mesh="caster_FR_swivel_link_collision" />
+        <body name="caster_FR_wheel_link" pos="-0.03 0.0125 -0.0465">
+          <inertial pos="-1.38205e-10 -0.0125 0" quat="0.707107 0 0 0.707107" mass="0.153476" diaginertia="8.88822e-05 5.35007e-05 5.35007e-05" />
+          <joint name="caster_FR_wheel_joint" pos="0 0 0" axis="0 1 0" damping="0.005" />
+          <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.08 0.08 0.08 1" mesh="caster_FR_wheel_link_visual" />
+          <geom name="caster_FR_wheel_link_contact" size="0.0375 0.0125" pos="0 -0.0125 0" quat="0.707107 0.707107 0 0" type="cylinder" rgba="0.08 0.08 0.08 1" />
+        </body>
+      </body>
+      <body name="caster_RL_swivel_link" pos="-0.21 0.21 0.084">
+        <inertial pos="-0.0169583 0.00111304 -0.0188326" quat="0.962382 0.0212555 0.268699 -0.0342146" mass="0.107413" diaginertia="9.64603e-05 8.95808e-05 2.81483e-05" />
+        <joint name="caster_RL_swivel_joint" pos="0 0 0" axis="0 0 1" damping="0.005" />
+        <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.15 0.15 0.15 1" mesh="caster_RL_swivel_link_visual" />
+        <geom type="mesh" rgba="0.15 0.15 0.15 1" mesh="caster_RL_swivel_link_collision" />
+        <body name="caster_RL_wheel_link" pos="-0.03 0.0125 -0.0465">
+          <inertial pos="-1.38203e-10 -0.0125 0" quat="0.707107 0 0 0.707107" mass="0.153476" diaginertia="8.88822e-05 5.35007e-05 5.35007e-05" />
+          <joint name="caster_RL_wheel_joint" pos="0 0 0" axis="0 1 0" damping="0.005" />
+          <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.08 0.08 0.08 1" mesh="caster_RL_wheel_link_visual" />
+          <geom name="caster_RL_wheel_link_contact" size="0.0375 0.0125" pos="0 -0.0125 0" quat="0.707107 0.707107 0 0" type="cylinder" rgba="0.08 0.08 0.08 1" />
+        </body>
+      </body>
+      <body name="caster_RR_swivel_link" pos="-0.21 -0.21 0.084">
+        <inertial pos="-0.0169583 0.00111304 -0.0188326" quat="0.962382 0.0212555 0.268699 -0.0342146" mass="0.107413" diaginertia="9.64603e-05 8.95808e-05 2.81483e-05" />
+        <joint name="caster_RR_swivel_joint" pos="0 0 0" axis="0 0 1" damping="0.005" />
+        <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.15 0.15 0.15 1" mesh="caster_RR_swivel_link_visual" />
+        <geom type="mesh" rgba="0.15 0.15 0.15 1" mesh="caster_RR_swivel_link_collision" />
+        <body name="caster_RR_wheel_link" pos="-0.03 0.0125 -0.0465">
+          <inertial pos="-1.38205e-10 -0.0125 0" quat="0.707107 0 0 0.707107" mass="0.153476" diaginertia="8.88822e-05 5.35007e-05 5.35007e-05" />
+          <joint name="caster_RR_wheel_joint" pos="0 0 0" axis="0 1 0" damping="0.005" />
+          <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.08 0.08 0.08 1" mesh="caster_RR_wheel_link_visual" />
+          <geom name="caster_RR_wheel_link_contact" size="0.0375 0.0125" pos="0 -0.0125 0" quat="0.707107 0.707107 0 0" type="cylinder" rgba="0.08 0.08 0.08 1" />
+        </body>
+      </body>
+      <body name="lift_carriage_link" pos="-0.117 0 0.64">
+        <inertial pos="0.0735554 0.0018728 -0.0191012" quat="0.991352 0.0192717 0.12906 -0.0138794" mass="15.673" diaginertia="0.268112 0.219477 0.145868" />
+        <joint name="lift_joint" pos="0 0 0" axis="0 0 1" type="slide" range="0 0.447677" actuatorfrcrange="-1000 1000" damping="50" />
+        <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.82 0.82 0.85 1" mesh="lift_carriage_link_visual" />
+        <geom type="mesh" rgba="0.82 0.82 0.85 1" mesh="lift_carriage_link_collision" />
+        <body name="left_link0" pos="0.111991 0.1146 0.118728">
+          <inertial pos="-0.0293869 0.00106394 0.00128982" quat="0.55828 0.385064 0.722058 0.13668" mass="0.167909" diaginertia="0.000186157 0.000184616 0.000139468" />
+          <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.95 0.95 0.95 1" mesh="left_link0_visual" />
+          <geom type="mesh" rgba="0.95 0.95 0.95 1" mesh="left_link0_collision" />
+          <body name="left_link1">
+            <inertial pos="0.0313845 0.0257126 0.0427375" quat="0.92789 -0.261093 0.0863434 0.251785" mass="0.105678" diaginertia="0.000108582 0.000107106 2.89303e-05" />
+            <joint name="left_shoulder_pan" pos="0 0 0" axis="0 0.5 0.866025" range="-1.91986 1.91986" actuatorfrcrange="-2.9 2.9" damping="0.1" />
+            <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.95 0.95 0.95 1" mesh="left_link1_visual" />
+            <geom type="mesh" rgba="0.95 0.95 0.95 1" mesh="left_link1_collision" />
+            <body name="left_link2" pos="0.0313169 0.0563318 0.0669854">
+              <inertial pos="-0.0796326 -0.00800901 0.0118058" quat="0.188938 0.734228 0.152027 0.634113" mass="0.130346" diaginertia="0.000221997 0.000200291 5.43758e-05" />
+              <joint name="left_shoulder_lift" pos="0 0 0" axis="0 0.866025 -0.5" range="0 3.49066" actuatorfrcrange="-2.9 2.9" damping="0.1" />
+              <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.95 0.95 0.95 1" mesh="left_link2_visual" />
+              <geom type="mesh" rgba="0.95 0.95 0.95 1" mesh="left_link2_collision" />
+              <body name="left_link3" pos="-0.112439 0.0157917 0.0243317">
+                <inertial pos="0.0860584 -0.0098792 0.00714983" quat="0.167208 0.672488 0.193725 0.694458" mass="0.12276" diaginertia="0.000224736 0.000199581 3.93869e-05" />
+                <joint name="left_elbow_flex" pos="0 0 0" axis="0 0.866025 -0.5" range="-3.38594 0" actuatorfrcrange="-2.9 2.9" damping="0.1" />
+                <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.95 0.95 0.95 1" mesh="left_link3_visual" />
+                <geom type="mesh" rgba="0.95 0.95 0.95 1" mesh="left_link3_collision" />
+                <body name="left_link4" pos="0.134412 0.00383711 0.00248613">
+                  <inertial pos="0.0386795 -0.00269464 0.00140567" quat="0.690335 0.165413 -0.519441 0.475665" mass="0.0680385" diaginertia="3.6499e-05 2.6033e-05 1.85288e-05" />
+                  <joint name="left_wrist_flex" pos="0 0 0" axis="0 0.866025 -0.5" range="-1.65806 1.65806" actuatorfrcrange="-2.9 2.9" damping="0.1" />
+                  <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.95 0.95 0.95 1" mesh="left_link4_visual" />
+                  <geom type="mesh" rgba="0.95 0.95 0.95 1" mesh="left_link4_collision" />
+                  <body name="left_link5" pos="0.0293471 -0.0103821 0.00545958">
+                    <inertial pos="0.0563001 0.00523393 -0.00502679" quat="0.522614 0.796785 0.0665057 0.295947" mass="0.111192" diaginertia="6.63493e-05 5.7545e-05 4.62377e-05" />
+                    <joint name="left_wrist_roll" pos="0 0 0" axis="1 0 0" range="-2.74017 2.84489" actuatorfrcrange="-2.9 2.9" damping="0.1" />
+                    <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.95 0.95 0.95 1" mesh="left_link5_visual" />
+                    <geom type="mesh" rgba="0.95 0.95 0.95 1" mesh="left_link5_collision" />
+                    <body name="left_jaw" pos="0.0557735 -0.00164844 0.0234324">
+                      <inertial pos="0.00183327 0.0252077 0.0200447" quat="0.962028 -0.270304 0.0369283 -0.00862882" mass="0.0145013" diaginertia="7.95985e-06 6.32121e-06 2.26313e-06" />
+                      <joint name="left_gripper" pos="0 0 0" axis="0 0.866025 -0.5" range="-0.174533 1.74533" actuatorfrcrange="-2.9 2.9" damping="0.1" />
+                      <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.95 0.95 0.95 1" mesh="left_jaw_visual" />
+                      <geom type="mesh" rgba="0.95 0.95 0.95 1" mesh="left_jaw_collision" />
+                    </body>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+        <body name="right_link0" pos="0.111991 -0.114599 0.118729">
+          <inertial pos="-0.0293869 -0.000585049 0.00156631" quat="0.290939 0.612631 0.556963 0.479405" mass="0.167909" diaginertia="0.000186157 0.000184616 0.000139468" />
+          <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.95 0.95 0.95 1" mesh="right_link0_visual" />
+          <geom type="mesh" rgba="0.95 0.95 0.95 1" mesh="right_link0_collision" />
+          <body name="right_link1">
+            <inertial pos="0.0313845 -0.0241554 0.0436365" quat="0.934124 0.237832 -0.0511156 0.261219" mass="0.105678" diaginertia="0.000108582 0.000107106 2.89303e-05" />
+            <joint name="right_shoulder_pan" pos="0 0 0" axis="0 -0.5 0.866025" range="-1.91986 1.91986" actuatorfrcrange="-2.9 2.9" damping="0.1" />
+            <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.95 0.95 0.95 1" mesh="right_link1_visual" />
+            <geom type="mesh" rgba="0.95 0.95 0.95 1" mesh="right_link1_collision" />
+            <body name="right_link2" pos="0.0313169 -0.0298452 0.0822774">
+              <inertial pos="-0.0796326 -0.0142286 -0.0010331" quat="-0.203486 0.73033 -0.185393 0.625172" mass="0.130346" diaginertia="0.000221997 0.000200291 5.43757e-05" />
+              <joint name="right_shoulder_lift" pos="0 0 0" axis="0 0.866025 0.5" range="0 3.49066" actuatorfrcrange="-2.9 2.9" damping="0.1" />
+              <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.95 0.95 0.95 1" mesh="right_link2_visual" />
+              <geom type="mesh" rgba="0.95 0.95 0.95 1" mesh="right_link2_collision" />
+              <body name="right_link3" pos="-0.112439 -0.013176 0.0258419">
+                <inertial pos="0.0860504 -0.0111313 -0.00498153" quat="-0.191439 0.665994 -0.179461 0.698281" mass="0.122792" diaginertia="0.000224727 0.000199574 3.93862e-05" />
+                <joint name="right_elbow_flex" pos="0 0 0" axis="0 0.866025 0.5" range="-3.38594 0" actuatorfrcrange="-2.9 2.9" damping="0.1" />
+                <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.95 0.95 0.95 1" mesh="right_link3_visual" />
+                <geom type="mesh" rgba="0.95 0.95 0.95 1" mesh="right_link3_collision" />
+                <body name="right_link4" pos="0.134412 -0.000234497 0.00456609">
+                  <inertial pos="0.0386796 -0.00256475 -0.00163086" quat="0.515139 0.488422 -0.68768 0.15222" mass="0.0680394" diaginertia="3.6499e-05 2.60331e-05 1.85288e-05" />
+                  <joint name="right_wrist_flex" pos="0 0 0" axis="0 0.866025 0.5" range="-1.65806 1.65806" actuatorfrcrange="-2.9 2.9" damping="0.1" />
+                  <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.95 0.95 0.95 1" mesh="right_link4_visual" />
+                  <geom type="mesh" rgba="0.95 0.95 0.95 1" mesh="right_link4_collision" />
+                  <body name="right_link5" pos="0.0293471 -0.0099192 -0.00626141">
+                    <inertial pos="0.0563001 0.00697031 0.00201946" quat="0.951344 -0.054196 -0.289554 -0.0903679" mass="0.111191" diaginertia="6.63487e-05 5.75445e-05 4.62372e-05" />
+                    <joint name="right_wrist_roll" pos="0 0 0" axis="1 0 0" range="-2.74017 2.84489" actuatorfrcrange="-2.9 2.9" damping="0.1" />
+                    <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.95 0.95 0.95 1" mesh="right_link5_visual" />
+                    <geom type="mesh" rgba="0.95 0.95 0.95 1" mesh="right_link5_collision" />
+                    <body name="right_jaw" pos="0.0557735 -0.0211173 0.0102886">
+                      <inertial pos="0.00183327 -0.00475541 0.0318528" quat="0.968292 0.246925 0.0362953 0.0109912" mass="0.0145013" diaginertia="7.95985e-06 6.32122e-06 2.26313e-06" />
+                      <joint name="right_gripper" pos="0 0 0" axis="0 0.866025 0.5" range="-0.174533 1.74533" actuatorfrcrange="-2.9 2.9" damping="0.1" />
+                      <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.95 0.95 0.95 1" mesh="right_jaw_visual" />
+                      <geom type="mesh" rgba="0.95 0.95 0.95 1" mesh="right_jaw_collision" />
+                    </body>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+      <body name="wheel_left_susp_link" pos="0 0.067 0.081">
+        <inertial pos="0 0 0" mass="0.3" diaginertia="0.0001 0.0001 0.0001" />
+        <joint name="wheel_left_suspension" pos="0 0 0" axis="0 0 1" type="slide" range="0 0.012" actuatorfrcrange="-2000 2000" damping="400" />
+        <body name="wheel_left_link">
+          <inertial pos="3.04367e-10 0.093 0" quat="0.707107 0 0 0.707107" mass="2.4" diaginertia="0.00863218 0.00472109 0.00472109" />
+          <joint name="wheel_left_joint" pos="0 0 0" axis="0 1 0" actuatorfrcrange="-16 16" damping="0.1" />
+          <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.08 0.08 0.08 1" mesh="wheel_left_link_visual" />
+          <geom name="wheel_left_link_contact" size="0.085 0.0225" pos="0 0.093 0" quat="0.707107 0.707107 0 0" type="cylinder" rgba="0.08 0.08 0.08 1" />
+        </body>
+      </body>
+      <body name="wheel_right_susp_link" pos="0 -0.067 0.081">
+        <inertial pos="0 0 0" mass="0.3" diaginertia="0.0001 0.0001 0.0001" />
+        <joint name="wheel_right_suspension" pos="0 0 0" axis="0 0 1" type="slide" range="0 0.012" actuatorfrcrange="-2000 2000" damping="400" />
+        <body name="wheel_right_link">
+          <inertial pos="3.04367e-10 -0.093 0" quat="0.707107 0 0 0.707107" mass="2.4" diaginertia="0.00863218 0.00472109 0.00472109" />
+          <joint name="wheel_right_joint" pos="0 0 0" axis="0 1 0" actuatorfrcrange="-16 16" damping="0.1" />
+          <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.08 0.08 0.08 1" mesh="wheel_right_link_visual" />
+          <geom name="wheel_right_link_contact" size="0.085 0.0225" pos="0 -0.093 0" quat="0.707107 0.707107 0 0" type="cylinder" rgba="0.08 0.08 0.08 1" />
+        </body>
+      </body>
+    </body>
+  </worldbody>
+</mujoco>

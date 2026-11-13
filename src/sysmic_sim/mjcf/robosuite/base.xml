@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mujoco model="sysmic_mobile_base">
+  <asset>
+    <mesh name="caster_FL_swivel_link_visual" file="../../description/models/sysmic_v2/meshes/caster_FL_swivel_link_visual.stl" />
+    <mesh name="caster_FL_wheel_link_visual" file="../../description/models/sysmic_v2/meshes/caster_FL_wheel_link_visual.stl" />
+    <mesh name="caster_FR_swivel_link_visual" file="../../description/models/sysmic_v2/meshes/caster_FR_swivel_link_visual.stl" />
+    <mesh name="caster_FR_wheel_link_visual" file="../../description/models/sysmic_v2/meshes/caster_FR_wheel_link_visual.stl" />
+    <mesh name="caster_RL_swivel_link_visual" file="../../description/models/sysmic_v2/meshes/caster_RL_swivel_link_visual.stl" />
+    <mesh name="caster_RL_wheel_link_visual" file="../../description/models/sysmic_v2/meshes/caster_RL_wheel_link_visual.stl" />
+    <mesh name="caster_RR_swivel_link_visual" file="../../description/models/sysmic_v2/meshes/caster_RR_swivel_link_visual.stl" />
+    <mesh name="caster_RR_wheel_link_visual" file="../../description/models/sysmic_v2/meshes/caster_RR_wheel_link_visual.stl" />
+    <mesh name="wheel_left_link_visual" file="../../description/models/sysmic_v2/meshes/wheel_left_link_visual.stl" />
+    <mesh name="wheel_right_link_visual" file="../../description/models/sysmic_v2/meshes/wheel_right_link_visual.stl" />
+  </asset>
+  <actuator>
+    <velocity name="actuator_mobile_forward" joint="joint_mobile_forward" kv="4000" ctrllimited="true" ctrlrange="-0.5 0.5" forcelimited="true" forcerange="-600 600" />
+    <velocity name="actuator_mobile_side" joint="joint_mobile_side" kv="4000" ctrllimited="true" ctrlrange="-0.5 0.5" forcelimited="true" forcerange="-600 600" />
+    <velocity name="actuator_mobile_yaw" joint="joint_mobile_yaw" kv="1000" ctrllimited="true" ctrlrange="-1.0 1.0" forcelimited="true" forcerange="-600 600" />
+  </actuator>
+  <contact>
+    <exclude body1="support" body2="caster_FL_wheel" />
+    <exclude body1="support" body2="caster_FR_wheel" />
+    <exclude body1="support" body2="caster_RL_wheel" />
+    <exclude body1="support" body2="caster_RR_wheel" />
+    <exclude body1="support" body2="wheel_left" />
+    <exclude body1="support" body2="wheel_right" />
+  </contact>
+  <worldbody>
+    <body name="support" pos="0 0 0">
+      <site name="center" type="sphere" pos="0 0 0" size="0.01" group="1" rgba="0 0 0 0" />
+      <joint name="joint_mobile_forward" pos="0 0 0" axis="1 0 0" type="slide" limited="false" damping="0" armature="0" frictionloss="10" />
+      <joint name="joint_mobile_side" pos="0 0 0" axis="0 1 0" type="slide" limited="false" damping="0" armature="0" frictionloss="10" />
+      <joint name="joint_mobile_yaw" pos="0 0 0" axis="0 0 1" type="hinge" limited="false" damping="0" armature="5" frictionloss="10" />
+      <geom name="platform_col" type="box" pos="1.89714e-09 -5.64396e-09 0.2055" size="0.2515 0.2515 0.1855" group="0" rgba="0.5 0.5 0.5 1" />
+      <body name="caster_FL" pos="0.21 0.21 0.084">
+        <inertial pos="-0.0169583 0.00111304 -0.0188326" quat="0.962382 0.0212555 0.268699 -0.0342146" mass="0.107413" diaginertia="9.64603e-05 8.95808e-05 2.81483e-05" />
+        <joint name="passive_caster_FL_susp" type="slide" axis="0 0 1" limited="true" range="-0.004 0.004" stiffness="20000" springref="-0.0025" damping="200" armature="1" />
+        <joint name="passive_caster_FL_swivel" type="hinge" axis="0 0 1" damping="0.005" armature="0.0005" />
+        <geom name="caster_FL_vis0" type="mesh" mesh="caster_FL_swivel_link_visual" rgba="0.15 0.15 0.15 1" contype="0" conaffinity="0" group="1" />
+        <body name="caster_FL_wheel" pos="-0.03 0.0125 -0.0465">
+          <inertial pos="-1.38205e-10 -0.0125 0" quat="0.707107 0 0 0.707107" mass="0.153476" diaginertia="8.88822e-05 5.35007e-05 5.35007e-05" />
+          <joint name="passive_caster_FL_wheel" type="hinge" axis="0 1 0" damping="0.005" armature="0.0005" />
+          <geom name="caster_FL_wheel_vis0" type="mesh" mesh="caster_FL_wheel_link_visual" rgba="0.08 0.08 0.08 1" contype="0" conaffinity="0" group="1" />
+          <geom name="caster_FL_wheel_col" type="cylinder" size="0.0375 0.0125" pos="0 -0.0125 0" quat="0.707107 0.707107 0 0" group="0" rgba="0.5 0.5 0.5 1" friction="1 0.005 0.0001" contype="4" conaffinity="4" />
+        </body>
+      </body>
+      <body name="caster_FR" pos="0.21 -0.21 0.084">
+        <inertial pos="-0.0169583 0.00111304 -0.0188326" quat="0.962382 0.0212555 0.268699 -0.0342146" mass="0.107413" diaginertia="9.64603e-05 8.95808e-05 2.81483e-05" />
+        <joint name="passive_caster_FR_susp" type="slide" axis="0 0 1" limited="true" range="-0.004 0.004" stiffness="20000" springref="-0.0025" damping="200" armature="1" />
+        <joint name="passive_caster_FR_swivel" type="hinge" axis="0 0 1" damping="0.005" armature="0.0005" />
+        <geom name="caster_FR_vis0" type="mesh" mesh="caster_FR_swivel_link_visual" rgba="0.15 0.15 0.15 1" contype="0" conaffinity="0" group="1" />
+        <body name="caster_FR_wheel" pos="-0.03 0.0125 -0.0465">
+          <inertial pos="-1.38205e-10 -0.0125 0" quat="0.707107 0 0 0.707107" mass="0.153476" diaginertia="8.88822e-05 5.35007e-05 5.35007e-05" />
+          <joint name="passive_caster_FR_wheel" type="hinge" axis="0 1 0" damping="0.005" armature="0.0005" />
+          <geom name="caster_FR_wheel_vis0" type="mesh" mesh="caster_FR_wheel_link_visual" rgba="0.08 0.08 0.08 1" contype="0" conaffinity="0" group="1" />
+          <geom name="caster_FR_wheel_col" type="cylinder" size="0.0375 0.0125" pos="0 -0.0125 0" quat="0.707107 0.707107 0 0" group="0" rgba="0.5 0.5 0.5 1" friction="1 0.005 0.0001" contype="4" conaffinity="4" />
+        </body>
+      </body>
+      <body name="caster_RL" pos="-0.21 0.21 0.084">
+        <inertial pos="-0.0169583 0.00111304 -0.0188326" quat="0.962382 0.0212555 0.268699 -0.0342146" mass="0.107413" diaginertia="9.64603e-05 8.95808e-05 2.81483e-05" />
+        <joint name="passive_caster_RL_susp" type="slide" axis="0 0 1" limited="true" range="-0.004 0.004" stiffness="20000" springref="-0.0025" damping="200" armature="1" />
+        <joint name="passive_caster_RL_swivel" type="hinge" axis="0 0 1" damping="0.005" armature="0.0005" />
+        <geom name="caster_RL_vis0" type="mesh" mesh="caster_RL_swivel_link_visual" rgba="0.15 0.15 0.15 1" contype="0" conaffinity="0" group="1" />
+        <body name="caster_RL_wheel" pos="-0.03 0.0125 -0.0465">
+          <inertial pos="-1.38203e-10 -0.0125 0" quat="0.707107 0 0 0.707107" mass="0.153476" diaginertia="8.88822e-05 5.35007e-05 5.35007e-05" />
+          <joint name="passive_caster_RL_wheel" type="hinge" axis="0 1 0" damping="0.005" armature="0.0005" />
+          <geom name="caster_RL_wheel_vis0" type="mesh" mesh="caster_RL_wheel_link_visual" rgba="0.08 0.08 0.08 1" contype="0" conaffinity="0" group="1" />
+          <geom name="caster_RL_wheel_col" type="cylinder" size="0.0375 0.0125" pos="0 -0.0125 0" quat="0.707107 0.707107 0 0" group="0" rgba="0.5 0.5 0.5 1" friction="1 0.005 0.0001" contype="4" conaffinity="4" />
+        </body>
+      </body>
+      <body name="caster_RR" pos="-0.21 -0.21 0.084">
+        <inertial pos="-0.0169583 0.00111304 -0.0188326" quat="0.962382 0.0212555 0.268699 -0.0342146" mass="0.107413" diaginertia="9.64603e-05 8.95808e-05 2.81483e-05" />
+        <joint name="passive_caster_RR_susp" type="slide" axis="0 0 1" limited="true" range="-0.004 0.004" stiffness="20000" springref="-0.0025" damping="200" armature="1" />
+        <joint name="passive_caster_RR_swivel" type="hinge" axis="0 0 1" damping="0.005" armature="0.0005" />
+        <geom name="caster_RR_vis0" type="mesh" mesh="caster_RR_swivel_link_visual" rgba="0.15 0.15 0.15 1" contype="0" conaffinity="0" group="1" />
+        <body name="caster_RR_wheel" pos="-0.03 0.0125 -0.0465">
+          <inertial pos="-1.38205e-10 -0.0125 0" quat="0.707107 0 0 0.707107" mass="0.153476" diaginertia="8.88822e-05 5.35007e-05 5.35007e-05" />
+          <joint name="passive_caster_RR_wheel" type="hinge" axis="0 1 0" damping="0.005" armature="0.0005" />
+          <geom name="caster_RR_wheel_vis0" type="mesh" mesh="caster_RR_wheel_link_visual" rgba="0.08 0.08 0.08 1" contype="0" conaffinity="0" group="1" />
+          <geom name="caster_RR_wheel_col" type="cylinder" size="0.0375 0.0125" pos="0 -0.0125 0" quat="0.707107 0.707107 0 0" group="0" rgba="0.5 0.5 0.5 1" friction="1 0.005 0.0001" contype="4" conaffinity="4" />
+        </body>
+      </body>
+      <body name="wheel_left_susp" pos="0 0.067 0.081">
+        <inertial pos="0 0 0" mass="0.3" diaginertia="0.0001 0.0001 0.0001" />
+        <joint name="passive_wheel_left_susp" type="slide" axis="0 0 1" limited="true" range="0 0.012" stiffness="34000" springref="0" damping="400" armature="0.5" />
+        <body name="wheel_left" pos="0 0 0">
+          <inertial pos="3.04367e-10 0.093 0" quat="0.707107 0 0 0.707107" mass="2.4" diaginertia="0.00863218 0.00472109 0.00472109" />
+          <joint name="passive_wheel_left_spin" type="hinge" axis="0 1 0" damping="0.1" armature="0.001" />
+          <geom name="wheel_left_vis0" type="mesh" mesh="wheel_left_link_visual" rgba="0.08 0.08 0.08 1" contype="0" conaffinity="0" group="1" />
+          <geom name="wheel_left_col" type="cylinder" size="0.085 0.0225" pos="0 0.093 0" quat="0.707107 0.707107 0 0" group="0" rgba="0.5 0.5 0.5 1" friction="1 0.005 0.0001" contype="4" conaffinity="4" />
+        </body>
+      </body>
+      <body name="wheel_right_susp" pos="0 -0.067 0.081">
+        <inertial pos="0 0 0" mass="0.3" diaginertia="0.0001 0.0001 0.0001" />
+        <joint name="passive_wheel_right_susp" type="slide" axis="0 0 1" limited="true" range="0 0.012" stiffness="34000" springref="0" damping="400" armature="0.5" />
+        <body name="wheel_right" pos="0 0 0">
+          <inertial pos="3.04367e-10 -0.093 0" quat="0.707107 0 0 0.707107" mass="2.4" diaginertia="0.00863218 0.00472109 0.00472109" />
+          <joint name="passive_wheel_right_spin" type="hinge" axis="0 1 0" damping="0.1" armature="0.001" />
+          <geom name="wheel_right_vis0" type="mesh" mesh="wheel_right_link_visual" rgba="0.08 0.08 0.08 1" contype="0" conaffinity="0" group="1" />
+          <geom name="wheel_right_col" type="cylinder" size="0.085 0.0225" pos="0 -0.093 0" quat="0.707107 0.707107 0 0" group="0" rgba="0.5 0.5 0.5 1" friction="1 0.005 0.0001" contype="4" conaffinity="4" />
+        </body>
+      </body>
+    </body>
+  </worldbody>
+</mujoco>

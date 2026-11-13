@@ -1,18 +1,25 @@
 #!/usr/bin/env python3
 """SYSMIC V2: URDF -> MuJoCo model with motors (the "physical" model).
 
-    python sysmic_to_mjcf.py            # convert and check
-    python sysmic_to_mjcf.py --view     # convert, then open the MuJoCo viewer
+    python sysmic_to_mjcf.py             # convert and check
+    python sysmic_to_mjcf.py --view      # convert, then open the MuJoCo viewer
+    python sysmic_to_mjcf.py --export    # also write shareable copies to ../mjcf/
 
-The other scripts call convert() themselves when the URDF has changed, so running
-this by hand is only needed to look at the physical model.
+The other scripts call convert() themselves when the URDF has changed. The working
+copies live in ~/.cache/sysmic_sim and contain absolute paths for this machine.
+--export writes copies with mesh paths relative to the package, so the mjcf/ folder
+can be committed and opened on any machine. Re-run it after changing the URDF.
 """
+import json
 import os
+import shutil
 import xml.etree.ElementTree as ET
 
 import mujoco
 
-from sysmic_paths import DESCRIPTION, GENERATED, ROBOT_XML, SCENE_XML, URDF
+from sysmic_paths import DESCRIPTION, GENERATED, ROBOSUITE_DIR, ROBOT_XML, SCENE_XML, URDF
+
+EXPORT_DIR = os.path.normpath(os.path.join(DESCRIPTION, "..", "mjcf"))
 
 
 _MARKER = os.path.join(GENERATED, "built_from.txt")
@@ -141,13 +148,101 @@ def convert(verbose=True):
     return SCENE_XML
 
 
+def _portable(src, dst):
+    """Copy one generated MJCF file, rewriting every mesh path relative to dst."""
+    tree = ET.parse(src)
+    root = tree.getroot()
+    src_dir = os.path.dirname(os.path.abspath(src))
+    compiler = root.find("compiler")
+    meshdir = ""
+    if compiler is not None and compiler.get("meshdir"):
+        meshdir = os.path.join(src_dir, compiler.get("meshdir"))
+        del compiler.attrib["meshdir"]
+    for mesh in root.iter("mesh"):
+        f = mesh.get("file")
+        if not f:
+            continue  # inline mesh (vertex=...), nothing to rewrite
+        absolute = f if os.path.isabs(f) else os.path.normpath(
+            os.path.join(meshdir or src_dir, f))
+        mesh.set("file", os.path.relpath(absolute, os.path.dirname(os.path.abspath(dst))))
+    tree.write(dst, xml_declaration=True, encoding="utf-8")
+
+
+def export(verbose=True):
+    """Write shareable copies of every generated model into the package's mjcf/ folder."""
+    import sysmic_robosuite  # noqa: F401  (builds the robosuite model files if needed)
+
+    if is_stale():
+        convert(verbose=False)
+    rs_out = os.path.join(EXPORT_DIR, "robosuite")
+    os.makedirs(rs_out, exist_ok=True)
+    written = []
+    for src, dst in ((ROBOT_XML, os.path.join(EXPORT_DIR, "sysmic_v2.xml")),
+                     (SCENE_XML, os.path.join(EXPORT_DIR, "sysmic_v2_scene.xml"))):
+        _portable(src, dst)
+        written.append(dst)
+    for name in sorted(os.listdir(ROBOSUITE_DIR)):
+        src, dst = os.path.join(ROBOSUITE_DIR, name), os.path.join(rs_out, name)
+        if name.endswith(".xml"):
+            _portable(src, dst)
+        else:
+            shutil.copyfile(src, dst)
+        written.append(dst)
+    with open(os.path.join(EXPORT_DIR, "README.md"), "w") as f:
+        f.write(EXPORT_README)
+    # every exported model must load from its new place
+    for path in written:
+        if path.endswith(".xml"):
+            mujoco.MjModel.from_xml_path(path)
+        elif path.endswith(".json"):
+            with open(path) as f:
+                json.load(f)
+    if verbose:
+        print(f"Exported {len(written)} files to {EXPORT_DIR}")
+        for path in written:
+            print("  " + os.path.relpath(path, EXPORT_DIR))
+    return written
+
+
+EXPORT_README = """# SYSMIC V2 MuJoCo models
+
+Generated from `../description/sysmic_v2_gazebo.urdf` by
+`python sim/sysmic_to_mjcf.py --export`. Do not edit these files by hand:
+change the URDF, then export again.
+
+| File | What it is |
+|---|---|
+| `sysmic_v2_scene.xml` | Physical model: floor, light, 15 motors, real wheels, casters and suspension. Open this one |
+| `sysmic_v2.xml` | Plain URDF to MJCF conversion, without motors or floor |
+| `robosuite/robot.xml` | Body, lift and arms of the robosuite / RoboCasa model |
+| `robosuite/base.xml` | Planar base joints, passive wheels and casters |
+| `robosuite/left_gripper.xml`, `robosuite/right_gripper.xml` | Gripper models |
+| `robosuite/controller.json` | robosuite controller settings |
+
+View the physical model (needs only `pip install mujoco`):
+
+```bash
+python -m mujoco.viewer --mjcf=sysmic_v2_scene.xml
+```
+
+Mesh paths point into `../description/models/`, so keep this folder inside the
+package. The `robosuite/` files are parts that robosuite assembles into one robot.
+Each one loads on its own in MuJoCo, but use `sim/sysmic_robosuite.py` to run them
+as a robot.
+"""
+
+
 if __name__ == "__main__":
     import argparse
 
     ap = argparse.ArgumentParser()
     ap.add_argument("--view", action="store_true", help="open the MuJoCo viewer afterwards")
+    ap.add_argument("--export", action="store_true",
+                    help="write shareable copies of all models to the package's mjcf/ folder")
     args = ap.parse_args()
     scene = convert()
+    if args.export:
+        export()
     if args.view:
         import mujoco.viewer
 
