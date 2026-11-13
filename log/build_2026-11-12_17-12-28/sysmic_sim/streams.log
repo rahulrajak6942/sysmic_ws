@@ -1,0 +1,105 @@
+[0.088s] Invoking command in '/home/gahan/sysmic_ws/build/sysmic_sim': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gahan/autoware/install/ros2agnocast_discovery_agent:/home/gahan/autoware/install/ros2agnocast:/home/gahan/autoware/install/autoware_adapi_visualizers:/opt/ros/humble /usr/bin/cmake /home/gahan/sysmic_ws/src/sysmic_sim -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/gahan/sysmic_ws/install/sysmic_sim
+[0.549s] -- The C compiler identification is GNU 11.4.0
+[0.852s] -- The CXX compiler identification is GNU 11.4.0
+[0.918s] -- Detecting C compiler ABI info
+[1.358s] -- Detecting C compiler ABI info - done
+[1.377s] -- Check for working C compiler: /usr/lib/ccache/gcc - skipped
+[1.377s] -- Detecting C compile features
+[1.379s] -- Detecting C compile features - done
+[1.388s] -- Detecting CXX compiler ABI info
+[1.823s] -- Detecting CXX compiler ABI info - done
+[1.842s] -- Check for working CXX compiler: /usr/lib/ccache/g++ - skipped
+[1.842s] -- Detecting CXX compile features
+[1.843s] -- Detecting CXX compile features - done
+[2.017s] -- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)
+[2.537s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[2.672s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[3.600s] -- Configuring done
+[3.603s] -- Generating done
+[3.604s] -- Build files have been written to: /home/gahan/sysmic_ws/build/sysmic_sim
+[3.609s] Invoked command in '/home/gahan/sysmic_ws/build/sysmic_sim' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gahan/autoware/install/ros2agnocast_discovery_agent:/home/gahan/autoware/install/ros2agnocast:/home/gahan/autoware/install/autoware_adapi_visualizers:/opt/ros/humble /usr/bin/cmake /home/gahan/sysmic_ws/src/sysmic_sim -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/gahan/sysmic_ws/install/sysmic_sim
+[3.614s] Invoking command in '/home/gahan/sysmic_ws/build/sysmic_sim': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gahan/autoware/install/ros2agnocast_discovery_agent:/home/gahan/autoware/install/ros2agnocast:/home/gahan/autoware/install/autoware_adapi_visualizers:/opt/ros/humble /usr/bin/cmake --build /home/gahan/sysmic_ws/build/sysmic_sim -- -j12 -l12
+[3.875s] Invoked command in '/home/gahan/sysmic_ws/build/sysmic_sim' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gahan/autoware/install/ros2agnocast_discovery_agent:/home/gahan/autoware/install/ros2agnocast:/home/gahan/autoware/install/autoware_adapi_visualizers:/opt/ros/humble /usr/bin/cmake --build /home/gahan/sysmic_ws/build/sysmic_sim -- -j12 -l12
+[3.936s] Invoking command in '/home/gahan/sysmic_ws/build/sysmic_sim': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gahan/autoware/install/ros2agnocast_discovery_agent:/home/gahan/autoware/install/ros2agnocast:/home/gahan/autoware/install/autoware_adapi_visualizers:/opt/ros/humble /usr/bin/cmake --install /home/gahan/sysmic_ws/build/sysmic_sim
+[4.004s] -- Install configuration: ""
+[4.004s] -- Execute custom install script
+[4.006s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/base_link_collision.stl
+[4.076s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/base_link_visual.stl
+[4.134s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/caster_FL_swivel_link_collision.stl
+[4.202s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/caster_FL_swivel_link_visual.stl
+[4.262s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/caster_FL_wheel_link_collision.stl
+[4.320s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/caster_FL_wheel_link_visual.stl
+[4.390s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/caster_FR_swivel_link_collision.stl
+[4.448s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/caster_FR_swivel_link_visual.stl
+[4.515s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/caster_FR_wheel_link_collision.stl
+[4.584s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/caster_FR_wheel_link_visual.stl
+[4.642s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/caster_RL_swivel_link_collision.stl
+[4.710s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/caster_RL_swivel_link_visual.stl
+[4.770s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/caster_RL_wheel_link_collision.stl
+[4.829s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/caster_RL_wheel_link_visual.stl
+[4.898s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/caster_RR_swivel_link_collision.stl
+[4.957s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/caster_RR_swivel_link_visual.stl
+[5.028s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/caster_RR_wheel_link_collision.stl
+[5.097s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/caster_RR_wheel_link_visual.stl
+[5.156s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/left_jaw_collision.stl
+[5.226s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/left_jaw_visual.stl
+[5.288s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/left_link0_collision.stl
+[5.347s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/left_link0_visual.stl
+[5.406s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/left_link1_collision.stl
+[5.465s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/left_link1_visual.stl
+[5.525s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/left_link2_collision.stl
+[5.584s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/left_link2_visual.stl
+[5.643s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/left_link3_collision.stl
+[5.703s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/left_link3_visual.stl
+[5.763s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/left_link4_collision.stl
+[5.821s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/left_link4_visual.stl
+[5.880s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/left_link5_collision.stl
+[5.939s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/left_link5_visual.stl
+[5.998s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/lift_carriage_link_collision.stl
+[6.058s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/lift_carriage_link_visual.stl
+[6.127s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/right_jaw_collision.stl
+[6.197s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/right_jaw_visual.stl
+[6.256s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/right_link0_collision.stl
+[6.326s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/right_link0_visual.stl
+[6.396s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/right_link1_collision.stl
+[6.456s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/right_link1_visual.stl
+[6.517s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/right_link2_collision.stl
+[6.581s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/right_link2_visual.stl
+[6.640s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/right_link3_collision.stl
+[6.698s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/right_link3_visual.stl
+[6.758s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/right_link4_collision.stl
+[6.828s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/right_link4_visual.stl
+[6.896s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/right_link5_collision.stl
+[6.955s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/right_link5_visual.stl
+[7.013s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/wheel_left_link_collision.stl
+[7.074s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/wheel_left_link_visual.stl
+[7.132s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/wheel_right_link_collision.stl
+[7.191s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/meshes/wheel_right_link_visual.stl
+[7.250s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/model.config
+[7.308s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/models/sysmic_v2/model.sdf
+[7.378s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/sysmic_v2_gazebo.urdf
+[7.437s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/description/sysmic_world.sdf
+[7.496s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/launch/sim.launch.py
+[7.556s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/rviz/sysmic.rviz
+[7.627s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/sim/sysmic_paths.py
+[7.686s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/sim/sysmic_robosuite.py
+[7.745s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/sim/sysmic_sim_server.py
+[7.817s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/sim/sysmic_teleop.py
+[7.884s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/sim/sysmic_to_mjcf.py
+[7.942s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/lib/sysmic_sim/ros2_bridge.py
+[8.002s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/ament_index/resource_index/package_run_dependencies/sysmic_sim
+[8.061s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/ament_index/resource_index/parent_prefix_path/sysmic_sim
+[8.120s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/environment/ament_prefix_path.sh
+[8.189s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/environment/ament_prefix_path.dsv
+[8.248s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/environment/path.sh
+[8.308s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/environment/path.dsv
+[8.377s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/local_setup.bash
+[8.447s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/local_setup.sh
+[8.519s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/local_setup.zsh
+[8.578s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/local_setup.dsv
+[8.645s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/package.dsv
+[8.714s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/ament_index/resource_index/packages/sysmic_sim
+[8.783s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/cmake/sysmic_simConfig.cmake
+[8.854s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/cmake/sysmic_simConfig-version.cmake
+[8.917s] -- Symlinking: /home/gahan/sysmic_ws/install/sysmic_sim/share/sysmic_sim/package.xml
+[8.983s] Invoked command in '/home/gahan/sysmic_ws/build/sysmic_sim' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/gahan/autoware/install/ros2agnocast_discovery_agent:/home/gahan/autoware/install/ros2agnocast:/home/gahan/autoware/install/autoware_adapi_visualizers:/opt/ros/humble /usr/bin/cmake --install /home/gahan/sysmic_ws/build/sysmic_sim

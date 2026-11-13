@@ -1,0 +1,1 @@
+/home/gahan/sysmic_ws/src/sysmic_sim/sim/sysmic_to_mjcf.py

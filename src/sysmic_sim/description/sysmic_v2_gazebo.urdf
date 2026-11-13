@@ -1,0 +1,834 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot name="sysmic_v2">
+  <link name="base_link">
+    <inertial>
+      <origin xyz="-0.0454402 0.00118309 0.376343" rpy="0 0 0" />
+      <mass value="33.1856" />
+      <inertia ixx="3.31613" ixy="0.00489042" ixz="0.612231" iyy="3.47622" iyz="-0.0143214" izz="1.42661" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/base_link_visual.stl" />
+      </geometry>
+      <material name="base_link_mat">
+        <color rgba="0.25 0.25 0.27 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/base_link_collision.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="caster_FL_swivel_link">
+    <inertial>
+      <origin xyz="-0.0169583 0.00111304 -0.0188326" rpy="0 0 0" />
+      <mass value="0.107413" />
+      <inertia ixx="7.825e-05" ixy="1.55921e-06" ixz="-3.01233e-05" iyy="8.93852e-05" iyz="3.30777e-06" izz="4.65542e-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/caster_FL_swivel_link_visual.stl" />
+      </geometry>
+      <material name="caster_FL_swivel_link_mat">
+        <color rgba="0.15 0.15 0.15 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/caster_FL_swivel_link_collision.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="caster_FL_wheel_link">
+    <inertial>
+      <origin xyz="-1.38205e-10 -0.0125 -1.11022e-16" rpy="0 0 0" />
+      <mass value="0.153476" />
+      <inertia ixx="5.35007e-05" ixy="-5.20417e-18" ixz="-2.1684e-19" iyy="8.88822e-05" iyz="0" izz="5.35007e-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/caster_FL_wheel_link_visual.stl" />
+      </geometry>
+      <material name="caster_FL_wheel_link_mat">
+        <color rgba="0.08 0.08 0.08 1" />
+      </material>
+    </visual>
+    <collision name="caster_FL_wheel_link_contact">
+      <origin xyz="0 -0.0125 0" rpy="1.5707963 0 0" />
+      <geometry>
+        <cylinder radius="0.0375" length="0.025" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="caster_FR_swivel_link">
+    <inertial>
+      <origin xyz="-0.0169583 0.00111304 -0.0188326" rpy="0 0 0" />
+      <mass value="0.107413" />
+      <inertia ixx="7.825e-05" ixy="1.55921e-06" ixz="-3.01233e-05" iyy="8.93852e-05" iyz="3.30777e-06" izz="4.65542e-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/caster_FR_swivel_link_visual.stl" />
+      </geometry>
+      <material name="caster_FR_swivel_link_mat">
+        <color rgba="0.15 0.15 0.15 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/caster_FR_swivel_link_collision.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="caster_FR_wheel_link">
+    <inertial>
+      <origin xyz="-1.38205e-10 -0.0125 6.245e-17" rpy="0 0 0" />
+      <mass value="0.153476" />
+      <inertia ixx="5.35007e-05" ixy="8.67362e-19" ixz="-8.67362e-19" iyy="8.88822e-05" iyz="-2.38524e-18" izz="5.35007e-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/caster_FR_wheel_link_visual.stl" />
+      </geometry>
+      <material name="caster_FR_wheel_link_mat">
+        <color rgba="0.08 0.08 0.08 1" />
+      </material>
+    </visual>
+    <collision name="caster_FR_wheel_link_contact">
+      <origin xyz="0 -0.0125 0" rpy="1.5707963 0 0" />
+      <geometry>
+        <cylinder radius="0.0375" length="0.025" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="caster_RL_swivel_link">
+    <inertial>
+      <origin xyz="-0.0169583 0.00111304 -0.0188326" rpy="0 0 0" />
+      <mass value="0.107413" />
+      <inertia ixx="7.825e-05" ixy="1.55921e-06" ixz="-3.01233e-05" iyy="8.93852e-05" iyz="3.30777e-06" izz="4.65542e-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/caster_RL_swivel_link_visual.stl" />
+      </geometry>
+      <material name="caster_RL_swivel_link_mat">
+        <color rgba="0.15 0.15 0.15 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/caster_RL_swivel_link_collision.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="caster_RL_wheel_link">
+    <inertial>
+      <origin xyz="-1.38203e-10 -0.0125 -1.249e-16" rpy="0 0 0" />
+      <mass value="0.153476" />
+      <inertia ixx="5.35007e-05" ixy="2.34188e-17" ixz="2.1684e-18" iyy="8.88822e-05" iyz="-2.81893e-18" izz="5.35007e-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/caster_RL_wheel_link_visual.stl" />
+      </geometry>
+      <material name="caster_RL_wheel_link_mat">
+        <color rgba="0.08 0.08 0.08 1" />
+      </material>
+    </visual>
+    <collision name="caster_RL_wheel_link_contact">
+      <origin xyz="0 -0.0125 0" rpy="1.5707963 0 0" />
+      <geometry>
+        <cylinder radius="0.0375" length="0.025" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="caster_RR_swivel_link">
+    <inertial>
+      <origin xyz="-0.0169583 0.00111304 -0.0188326" rpy="0 0 0" />
+      <mass value="0.107413" />
+      <inertia ixx="7.825e-05" ixy="1.55921e-06" ixz="-3.01233e-05" iyy="8.93852e-05" iyz="3.30777e-06" izz="4.65542e-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/caster_RR_swivel_link_visual.stl" />
+      </geometry>
+      <material name="caster_RR_swivel_link_mat">
+        <color rgba="0.15 0.15 0.15 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/caster_RR_swivel_link_collision.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="caster_RR_wheel_link">
+    <inertial>
+      <origin xyz="-1.38205e-10 -0.0125 5.55112e-17" rpy="0 0 0" />
+      <mass value="0.153476" />
+      <inertia ixx="5.35007e-05" ixy="1.9082e-17" ixz="-3.46945e-18" iyy="8.88822e-05" iyz="-3.46945e-18" izz="5.35007e-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/caster_RR_wheel_link_visual.stl" />
+      </geometry>
+      <material name="caster_RR_wheel_link_mat">
+        <color rgba="0.08 0.08 0.08 1" />
+      </material>
+    </visual>
+    <collision name="caster_RR_wheel_link_contact">
+      <origin xyz="0 -0.0125 0" rpy="1.5707963 0 0" />
+      <geometry>
+        <cylinder radius="0.0375" length="0.025" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="left_jaw">
+    <inertial>
+      <origin xyz="0.00183327 0.0252077 0.0200447" rpy="0 0 0" />
+      <mass value="0.0145013" />
+      <inertia ixx="7.92717e-06" ixy="-2.19352e-07" ixz="-3.69998e-07" iyy="5.22845e-06" iyz="-1.79018e-06" izz="3.38857e-06" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/left_jaw_visual.stl" />
+      </geometry>
+      <material name="left_jaw_mat">
+        <color rgba="0.95 0.95 0.95 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/left_jaw_collision.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="left_link0">
+    <inertial>
+      <origin xyz="-0.0293869 0.00106394 0.00128982" rpy="0 0 0" />
+      <mass value="0.167909" />
+      <inertia ixx="0.000147117" ixy="9.48306e-06" ixz="1.40486e-05" iyy="0.000182948" iyz="-4.32781e-06" izz="0.000180176" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/left_link0_visual.stl" />
+      </geometry>
+      <material name="left_link0_mat">
+        <color rgba="0.95 0.95 0.95 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/left_link0_collision.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="left_link1">
+    <inertial>
+      <origin xyz="0.0313845 0.0257126 0.0427375" rpy="0 0 0" />
+      <mass value="0.105678" />
+      <inertia ixx="0.000108129" ixy="-6.52245e-07" ixz="-2.27751e-06" iyy="8.55743e-05" iyz="-3.52164e-05" izz="5.09157e-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/left_link1_visual.stl" />
+      </geometry>
+      <material name="left_link1_mat">
+        <color rgba="0.95 0.95 0.95 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/left_link1_collision.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="left_link2">
+    <inertial>
+      <origin xyz="-0.0796326 -0.00800901 0.0118058" rpy="0 0 0" />
+      <mass value="0.130346" />
+      <inertia ixx="5.81651e-05" ixy="1.37129e-05" ixz="2.07828e-05" iyy="0.000203896" iyz="7.24175e-06" izz="0.000214603" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/left_link2_visual.stl" />
+      </geometry>
+      <material name="left_link2_mat">
+        <color rgba="0.95 0.95 0.95 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/left_link2_collision.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="left_link3">
+    <inertial>
+      <origin xyz="0.0860584 -0.0098792 0.00714983" rpy="0 0 0" />
+      <mass value="0.12276" />
+      <inertia ixx="3.9806e-05" ixy="-7.55935e-06" ixz="-4.13972e-06" iyy="0.000205377" iyz="1.06309e-05" izz="0.000218521" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/left_link3_visual.stl" />
+      </geometry>
+      <material name="left_link3_mat">
+        <color rgba="0.95 0.95 0.95 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/left_link3_collision.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="left_link4">
+    <inertial>
+      <origin xyz="0.0386795 -0.00269464 0.00140567" rpy="0 0 0" />
+      <mass value="0.0680385" />
+      <inertia ixx="2.36819e-05" ixy="-2.99554e-06" ixz="1.77591e-06" iyy="2.45761e-05" iyz="6.63757e-06" izz="3.28028e-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/left_link4_visual.stl" />
+      </geometry>
+      <material name="left_link4_mat">
+        <color rgba="0.95 0.95 0.95 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/left_link4_collision.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="left_link5">
+    <inertial>
+      <origin xyz="0.0563001 0.00523393 -0.00502679" rpy="0 0 0" />
+      <mass value="0.111192" />
+      <inertia ixx="6.00962e-05" ixy="7.83862e-06" ixz="4.5933e-06" iyy="5.19448e-05" iyz="-1.0291e-06" izz="5.8091e-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/left_link5_visual.stl" />
+      </geometry>
+      <material name="left_link5_mat">
+        <color rgba="0.95 0.95 0.95 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/left_link5_collision.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="lift_carriage_link">
+    <inertial>
+      <origin xyz="0.0735554 0.0018728 -0.0191012" rpy="0 0 0" />
+      <mass value="15.673" />
+      <inertia ixx="0.26009" ixy="-0.00027396" ixz="-0.030207" iyy="0.219373" iyz="0.0032527" izz="0.153994" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/lift_carriage_link_visual.stl" />
+      </geometry>
+      <material name="lift_carriage_link_mat">
+        <color rgba="0.82 0.82 0.85 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/lift_carriage_link_collision.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="right_jaw">
+    <inertial>
+      <origin xyz="0.00183327 -0.00475541 0.0318528" rpy="0 0 0" />
+      <mass value="0.0145013" />
+      <inertia ixx="7.92717e-06" ixy="2.10752e-07" ixz="-3.74964e-07" iyy="5.39888e-06" iyz="1.69179e-06" izz="3.21814e-06" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/right_jaw_visual.stl" />
+      </geometry>
+      <material name="right_jaw_mat">
+        <color rgba="0.95 0.95 0.95 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/right_jaw_collision.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="right_link0">
+    <inertial>
+      <origin xyz="-0.0293869 -0.000585049 0.00156631" rpy="0 0 0" />
+      <mass value="0.167909" />
+      <inertia ixx="0.000147117" ixy="-7.42487e-06" ixz="1.52368e-05" iyy="0.000184617" iyz="3.36431e-06" izz="0.000178507" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/right_link0_visual.stl" />
+      </geometry>
+      <material name="right_link0_mat">
+        <color rgba="0.95 0.95 0.95 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/right_link0_collision.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="right_link1">
+    <inertial>
+      <origin xyz="0.0313845 -0.0241554 0.0436365" rpy="0 0 0" />
+      <mass value="0.105678" />
+      <inertia ixx="0.000108129" ixy="1.64626e-06" ixz="-1.70361e-06" iyy="9.00786e-05" iyz="3.26158e-05" izz="4.64114e-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/right_link1_visual.stl" />
+      </geometry>
+      <material name="right_link1_mat">
+        <color rgba="0.95 0.95 0.95 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/right_link1_collision.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="right_link2">
+    <inertial>
+      <origin xyz="-0.0796326 -0.0142286 -0.0010331" rpy="0 0 0" />
+      <mass value="0.130346" />
+      <inertia ixx="5.81651e-05" ixy="-1.1142e-05" ixz="2.22671e-05" iyy="0.000205654" iyz="-8.25705e-06" izz="0.000212844" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/right_link2_visual.stl" />
+      </geometry>
+      <material name="right_link2_mat">
+        <color rgba="0.95 0.95 0.95 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/right_link2_collision.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="right_link3">
+    <inertial>
+      <origin xyz="0.0860504 -0.0111313 -0.00498153" rpy="0 0 0" />
+      <mass value="0.122792" />
+      <inertia ixx="3.98054e-05" ixy="-1.94089e-07" ixz="-8.61651e-06" iyy="0.000206021" iyz="-1.10061e-05" izz="0.000217861" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/right_link3_visual.stl" />
+      </geometry>
+      <material name="right_link3_mat">
+        <color rgba="0.95 0.95 0.95 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/right_link3_collision.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="right_link4">
+    <inertial>
+      <origin xyz="0.0386796 -0.00256475 -0.00163086" rpy="0 0 0" />
+      <mass value="0.0680394" />
+      <inertia ixx="2.3682e-05" ixy="-3.03575e-06" ixz="-1.70624e-06" iyy="2.49978e-05" iyz="-6.88109e-06" izz="3.23811e-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/right_link4_visual.stl" />
+      </geometry>
+      <material name="right_link4_mat">
+        <color rgba="0.95 0.95 0.95 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/right_link4_collision.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="right_link5">
+    <inertial>
+      <origin xyz="0.0563001 0.00697031 0.00201946" rpy="0 0 0" />
+      <mass value="0.111191" />
+      <inertia ixx="6.00955e-05" ixy="-5.85988e-08" ixz="9.08511e-06" iyy="5.74452e-05" iyz="-2.14655e-06" izz="5.25897e-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/right_link5_visual.stl" />
+      </geometry>
+      <material name="right_link5_mat">
+        <color rgba="0.95 0.95 0.95 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/right_link5_collision.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="wheel_left_link">
+    <inertial>
+      <origin xyz="3.04367e-10 0.093 2.77556e-17" rpy="0 0 0" />
+      <mass value="2.4" />
+      <inertia ixx="0.00472109" ixy="9.74916e-19" ixz="-2.03904e-20" iyy="0.00863218" iyz="-3.46945e-18" izz="0.00472109" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/wheel_left_link_visual.stl" />
+      </geometry>
+      <material name="wheel_left_link_mat">
+        <color rgba="0.08 0.08 0.08 1" />
+      </material>
+    </visual>
+    <collision name="wheel_left_link_contact">
+      <origin xyz="0 0.093 0" rpy="1.5707963 0 0" />
+      <geometry>
+        <cylinder radius="0.085" length="0.045" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="wheel_right_link">
+    <inertial>
+      <origin xyz="3.04367e-10 -0.093 6.93889e-17" rpy="0 0 0" />
+      <mass value="2.4" />
+      <inertia ixx="0.00472109" ixy="1.40184e-19" ixz="-2.81642e-19" iyy="0.00863218" iyz="3.46945e-18" izz="0.00472109" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="models/sysmic_v2/meshes/wheel_right_link_visual.stl" />
+      </geometry>
+      <material name="wheel_right_link_mat">
+        <color rgba="0.08 0.08 0.08 1" />
+      </material>
+    </visual>
+    <collision name="wheel_right_link_contact">
+      <origin xyz="0 -0.093 0" rpy="1.5707963 0 0" />
+      <geometry>
+        <cylinder radius="0.085" length="0.045" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="caster_FL_swivel_joint" type="continuous">
+    <parent link="base_link" />
+    <child link="caster_FL_swivel_link" />
+    <origin xyz="0.21 0.21 0.084" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit effort="0.0" velocity="100.0" />
+    <dynamics damping="0.005" friction="0.0" />
+  </joint>
+  <joint name="caster_FL_wheel_joint" type="continuous">
+    <parent link="caster_FL_swivel_link" />
+    <child link="caster_FL_wheel_link" />
+    <origin xyz="-0.03 0.0125 -0.0465" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit effort="0.0" velocity="100.0" />
+    <dynamics damping="0.005" friction="0.0" />
+  </joint>
+  <joint name="caster_FR_swivel_joint" type="continuous">
+    <parent link="base_link" />
+    <child link="caster_FR_swivel_link" />
+    <origin xyz="0.21 -0.21 0.084" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit effort="0.0" velocity="100.0" />
+    <dynamics damping="0.005" friction="0.0" />
+  </joint>
+  <joint name="caster_FR_wheel_joint" type="continuous">
+    <parent link="caster_FR_swivel_link" />
+    <child link="caster_FR_wheel_link" />
+    <origin xyz="-0.03 0.0125 -0.0465" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit effort="0.0" velocity="100.0" />
+    <dynamics damping="0.005" friction="0.0" />
+  </joint>
+  <joint name="caster_RL_swivel_joint" type="continuous">
+    <parent link="base_link" />
+    <child link="caster_RL_swivel_link" />
+    <origin xyz="-0.21 0.21 0.084" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit effort="0.0" velocity="100.0" />
+    <dynamics damping="0.005" friction="0.0" />
+  </joint>
+  <joint name="caster_RL_wheel_joint" type="continuous">
+    <parent link="caster_RL_swivel_link" />
+    <child link="caster_RL_wheel_link" />
+    <origin xyz="-0.03 0.0125 -0.0465" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit effort="0.0" velocity="100.0" />
+    <dynamics damping="0.005" friction="0.0" />
+  </joint>
+  <joint name="caster_RR_swivel_joint" type="continuous">
+    <parent link="base_link" />
+    <child link="caster_RR_swivel_link" />
+    <origin xyz="-0.21 -0.21 0.084" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit effort="0.0" velocity="100.0" />
+    <dynamics damping="0.005" friction="0.0" />
+  </joint>
+  <joint name="caster_RR_wheel_joint" type="continuous">
+    <parent link="caster_RR_swivel_link" />
+    <child link="caster_RR_wheel_link" />
+    <origin xyz="-0.03 0.0125 -0.0465" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit effort="0.0" velocity="100.0" />
+    <dynamics damping="0.005" friction="0.0" />
+  </joint>
+  <joint name="wheel_left_joint" type="continuous">
+    <parent link="wheel_left_susp_link" />
+    <child link="wheel_left_link" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit effort="16.0" velocity="27.0" />
+    <dynamics damping="0.1" friction="0.0" />
+  </joint>
+  <joint name="wheel_right_joint" type="continuous">
+    <parent link="wheel_right_susp_link" />
+    <child link="wheel_right_link" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit effort="16.0" velocity="27.0" />
+    <dynamics damping="0.1" friction="0.0" />
+  </joint>
+  <joint name="lift_joint" type="prismatic">
+    <parent link="base_link" />
+    <child link="lift_carriage_link" />
+    <origin xyz="-0.117 -1.77636e-17 0.64" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit lower="0" upper="0.447677" effort="1000" velocity="0.1" />
+    <dynamics damping="50.0" friction="0.0" />
+  </joint>
+  <joint name="left_shoulder_pan" type="revolute">
+    <parent link="left_link0" />
+    <child link="left_link1" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="1.73472e-18 0.5 0.866025" />
+    <limit lower="-1.91986" upper="1.91986" effort="2.9" velocity="4.7" />
+    <dynamics damping="0.1" friction="0.0" />
+  </joint>
+  <joint name="left_shoulder_lift" type="revolute">
+    <parent link="left_link1" />
+    <child link="left_link2" />
+    <origin xyz="0.0313169 0.0563318 0.0669854" rpy="0 0 0" />
+    <axis xyz="3.94299e-17 0.866025 -0.5" />
+    <limit lower="0" upper="3.49066" effort="2.9" velocity="4.7" />
+    <dynamics damping="0.1" friction="0.0" />
+  </joint>
+  <joint name="left_elbow_flex" type="revolute">
+    <parent link="left_link2" />
+    <child link="left_link3" />
+    <origin xyz="-0.112439 0.0157917 0.0243317" rpy="0 0 0" />
+    <axis xyz="0 0.866025 -0.5" />
+    <limit lower="-3.38594" upper="0" effort="2.9" velocity="4.7" />
+    <dynamics damping="0.1" friction="0.0" />
+  </joint>
+  <joint name="left_wrist_flex" type="revolute">
+    <parent link="left_link3" />
+    <child link="left_link4" />
+    <origin xyz="0.134412 0.00383711 0.00248613" rpy="0 0 0" />
+    <axis xyz="6.245e-17 0.866025 -0.5" />
+    <limit lower="-1.65806" upper="1.65806" effort="2.9" velocity="4.7" />
+    <dynamics damping="0.1" friction="0.0" />
+  </joint>
+  <joint name="left_wrist_roll" type="revolute">
+    <parent link="left_link4" />
+    <child link="left_link5" />
+    <origin xyz="0.0293471 -0.0103821 0.00545958" rpy="0 0 0" />
+    <axis xyz="1 -9.1491e-17 1.07576e-17" />
+    <limit lower="-2.74017" upper="2.84489" effort="2.9" velocity="4.7" />
+    <dynamics damping="0.1" friction="0.0" />
+  </joint>
+  <joint name="left_gripper" type="revolute">
+    <parent link="left_link5" />
+    <child link="left_jaw" />
+    <origin xyz="0.0557735 -0.00164844 0.0234324" rpy="0 0 0" />
+    <axis xyz="2.73198e-17 0.866025 -0.5" />
+    <limit lower="-0.174533" upper="1.74533" effort="2.9" velocity="4.7" />
+    <dynamics damping="0.1" friction="0.0" />
+  </joint>
+  <joint name="left_arm_mount" type="fixed">
+    <parent link="lift_carriage_link" />
+    <child link="left_link0" />
+    <origin xyz="0.111991 0.1146 0.118728" rpy="0 0 0" />
+  </joint>
+  <joint name="right_shoulder_pan" type="revolute">
+    <parent link="right_link0" />
+    <child link="right_link1" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="1.73472e-18 -0.5 0.866025" />
+    <limit lower="-1.91986" upper="1.91986" effort="2.9" velocity="4.7" />
+    <dynamics damping="0.1" friction="0.0" />
+  </joint>
+  <joint name="right_shoulder_lift" type="revolute">
+    <parent link="right_link1" />
+    <child link="right_link2" />
+    <origin xyz="0.0313169 -0.0298452 0.0822774" rpy="0 0 0" />
+    <axis xyz="3.94299e-17 0.866025 0.5" />
+    <limit lower="0" upper="3.49066" effort="2.9" velocity="4.7" />
+    <dynamics damping="0.1" friction="0.0" />
+  </joint>
+  <joint name="right_elbow_flex" type="revolute">
+    <parent link="right_link2" />
+    <child link="right_link3" />
+    <origin xyz="-0.112439 -0.013176 0.0258419" rpy="0 0 0" />
+    <axis xyz="0 0.866025 0.5" />
+    <limit lower="-3.38594" upper="0" effort="2.9" velocity="4.7" />
+    <dynamics damping="0.1" friction="0.0" />
+  </joint>
+  <joint name="right_wrist_flex" type="revolute">
+    <parent link="right_link3" />
+    <child link="right_link4" />
+    <origin xyz="0.134412 -0.000234497 0.00456609" rpy="0 0 0" />
+    <axis xyz="6.245e-17 0.866025 0.5" />
+    <limit lower="-1.65806" upper="1.65806" effort="2.9" velocity="4.7" />
+    <dynamics damping="0.1" friction="0.0" />
+  </joint>
+  <joint name="right_wrist_roll" type="revolute">
+    <parent link="right_link4" />
+    <child link="right_link5" />
+    <origin xyz="0.0293471 -0.0099192 -0.00626141" rpy="0 0 0" />
+    <axis xyz="1 -5.50618e-17 -7.38548e-17" />
+    <limit lower="-2.74017" upper="2.84489" effort="2.9" velocity="4.7" />
+    <dynamics damping="0.1" friction="0.0" />
+  </joint>
+  <joint name="right_gripper" type="revolute">
+    <parent link="right_link5" />
+    <child link="right_jaw" />
+    <origin xyz="0.0557735 -0.0211173 0.0102886" rpy="0 0 0" />
+    <axis xyz="2.73198e-17 0.866025 0.5" />
+    <limit lower="-0.174533" upper="1.74533" effort="2.9" velocity="4.7" />
+    <dynamics damping="0.1" friction="0.0" />
+  </joint>
+  <joint name="right_arm_mount" type="fixed">
+    <parent link="lift_carriage_link" />
+    <child link="right_link0" />
+    <origin xyz="0.111991 -0.114599 0.118729" rpy="0 0 0" />
+  </joint>
+  <link name="wheel_left_susp_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.3" />
+      <inertia ixx="1e-4" iyy="1e-4" izz="1e-4" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+  </link>
+  <joint name="wheel_left_suspension" type="prismatic">
+    <parent link="base_link" />
+    <child link="wheel_left_susp_link" />
+    <origin xyz="0 0.067 0.081" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit lower="0" upper="0.012" effort="2000" velocity="1" />
+    <dynamics damping="400" friction="0" />
+  </joint>
+  <gazebo reference="wheel_left_suspension">
+    <springReference>0</springReference>
+    <springStiffness>34000</springStiffness>
+  </gazebo>
+  <link name="wheel_right_susp_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.3" />
+      <inertia ixx="1e-4" iyy="1e-4" izz="1e-4" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+  </link>
+  <joint name="wheel_right_suspension" type="prismatic">
+    <parent link="base_link" />
+    <child link="wheel_right_susp_link" />
+    <origin xyz="0 -0.067 0.081" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit lower="0" upper="0.012" effort="2000" velocity="1" />
+    <dynamics damping="400" friction="0" />
+  </joint>
+  <gazebo reference="wheel_right_suspension">
+    <springReference>0</springReference>
+    <springStiffness>34000</springStiffness>
+  </gazebo>
+  <gazebo reference="wheel_left_link">
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+  </gazebo>
+  <gazebo reference="wheel_right_link">
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+  </gazebo>
+  <gazebo reference="caster_FL_wheel_link">
+    <mu1>0.8</mu1>
+    <mu2>0.8</mu2>
+  </gazebo>
+  <gazebo reference="caster_FR_wheel_link">
+    <mu1>0.8</mu1>
+    <mu2>0.8</mu2>
+  </gazebo>
+  <gazebo reference="caster_RL_wheel_link">
+    <mu1>0.8</mu1>
+    <mu2>0.8</mu2>
+  </gazebo>
+  <gazebo reference="caster_RR_wheel_link">
+    <mu1>0.8</mu1>
+    <mu2>0.8</mu2>
+  </gazebo>
+  <gazebo>
+    <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher" />
+  </gazebo>
+</robot>

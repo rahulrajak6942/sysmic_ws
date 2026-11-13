@@ -1,0 +1,1722 @@
+<?xml version="1.0"?>
+<sdf version="1.11">
+  <model name="sysmic_v2">
+    <link name="base_link">
+      <inertial>
+        <pose>-0.0454402 0.0011830899999999999 0.37634299999999998 0 0 0</pose>
+        <mass>33.185600000000001</mass>
+        <inertia>
+          <ixx>3.3161299999999998</ixx>
+          <ixy>0.0048904200000000004</ixy>
+          <ixz>0.61223099999999997</ixz>
+          <iyy>3.4762200000000001</iyy>
+          <iyz>-0.0143214</iyz>
+          <izz>1.4266099999999999</izz>
+        </inertia>
+      </inertial>
+      <collision name="base_link_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/base_link_collision.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="base_link_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/base_link_visual.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.3125 0.3125 0.337500006 1</diffuse>
+          <ambient>0.3125 0.3125 0.337500006 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name="caster_FL_swivel_joint" type="revolute">
+      <pose relative_to="base_link">0.20999999999999999 0.20999999999999999 0.084000000000000005 0 0 0</pose>
+      <parent>base_link</parent>
+      <child>caster_FL_swivel_link</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <effort>0</effort>
+          <velocity>100</velocity>
+          <lower>-inf</lower>
+          <upper>inf</upper>
+        </limit>
+        <dynamics>
+          <damping>0.0050000000000000001</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name="caster_FL_swivel_link">
+      <pose relative_to="caster_FL_swivel_joint">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>-0.016958299999999999 0.00111304 -0.018832600000000001 0 0 0</pose>
+        <mass>0.10741299999999999</mass>
+        <inertia>
+          <ixx>7.8250000000000005e-05</ixx>
+          <ixy>1.5592100000000001e-06</ixy>
+          <ixz>-3.01233e-05</ixz>
+          <iyy>8.9385199999999999e-05</iyy>
+          <iyz>3.3077699999999999e-06</iyz>
+          <izz>4.6554200000000002e-05</izz>
+        </inertia>
+      </inertial>
+      <collision name="caster_FL_swivel_link_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/caster_FL_swivel_link_collision.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="caster_FL_swivel_link_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/caster_FL_swivel_link_visual.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.187500015 0.187500015 0.187500015 1</diffuse>
+          <ambient>0.187500015 0.187500015 0.187500015 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name="caster_FL_wheel_joint" type="revolute">
+      <pose relative_to="caster_FL_swivel_link">-0.029999999999999999 0.012500000000000001 -0.0465 0 0 0</pose>
+      <parent>caster_FL_swivel_link</parent>
+      <child>caster_FL_wheel_link</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <effort>0</effort>
+          <velocity>100</velocity>
+          <lower>-inf</lower>
+          <upper>inf</upper>
+        </limit>
+        <dynamics>
+          <damping>0.0050000000000000001</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name="caster_FL_wheel_link">
+      <pose relative_to="caster_FL_wheel_joint">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>-1.3820499999999999e-10 -0.012500000000000001 -1.11022e-16 0 0 0</pose>
+        <mass>0.153476</mass>
+        <inertia>
+          <ixx>5.3500700000000001e-05</ixx>
+          <ixy>-5.2041699999999996e-18</ixy>
+          <ixz>-2.1684e-19</ixz>
+          <iyy>8.8882199999999994e-05</iyy>
+          <iyz>0</iyz>
+          <izz>5.3500700000000001e-05</izz>
+        </inertia>
+      </inertial>
+      <collision name="caster_FL_wheel_link_contact_collision">
+        <pose>0 -0.012500000000000001 0 1.5707963000000003 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.025000000000000001</length>
+            <radius>0.037499999999999999</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode />
+          </contact>
+          <friction>
+            <ode>
+              <mu>0.80000000000000004</mu>
+              <mu2>0.80000000000000004</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name="caster_FL_wheel_link_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/caster_FL_wheel_link_visual.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.099999994 0.099999994 0.099999994 1</diffuse>
+          <ambient>0.099999994 0.099999994 0.099999994 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name="caster_FR_swivel_joint" type="revolute">
+      <pose relative_to="base_link">0.20999999999999999 -0.20999999999999999 0.084000000000000005 0 0 0</pose>
+      <parent>base_link</parent>
+      <child>caster_FR_swivel_link</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <effort>0</effort>
+          <velocity>100</velocity>
+          <lower>-inf</lower>
+          <upper>inf</upper>
+        </limit>
+        <dynamics>
+          <damping>0.0050000000000000001</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name="caster_FR_swivel_link">
+      <pose relative_to="caster_FR_swivel_joint">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>-0.016958299999999999 0.00111304 -0.018832600000000001 0 0 0</pose>
+        <mass>0.10741299999999999</mass>
+        <inertia>
+          <ixx>7.8250000000000005e-05</ixx>
+          <ixy>1.5592100000000001e-06</ixy>
+          <ixz>-3.01233e-05</ixz>
+          <iyy>8.9385199999999999e-05</iyy>
+          <iyz>3.3077699999999999e-06</iyz>
+          <izz>4.6554200000000002e-05</izz>
+        </inertia>
+      </inertial>
+      <collision name="caster_FR_swivel_link_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/caster_FR_swivel_link_collision.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="caster_FR_swivel_link_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/caster_FR_swivel_link_visual.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.187500015 0.187500015 0.187500015 1</diffuse>
+          <ambient>0.187500015 0.187500015 0.187500015 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name="caster_FR_wheel_joint" type="revolute">
+      <pose relative_to="caster_FR_swivel_link">-0.029999999999999999 0.012500000000000001 -0.0465 0 0 0</pose>
+      <parent>caster_FR_swivel_link</parent>
+      <child>caster_FR_wheel_link</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <effort>0</effort>
+          <velocity>100</velocity>
+          <lower>-inf</lower>
+          <upper>inf</upper>
+        </limit>
+        <dynamics>
+          <damping>0.0050000000000000001</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name="caster_FR_wheel_link">
+      <pose relative_to="caster_FR_wheel_joint">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>-1.3820499999999999e-10 -0.012500000000000001 6.2449999999999997e-17 0 0 0</pose>
+        <mass>0.153476</mass>
+        <inertia>
+          <ixx>5.3500700000000001e-05</ixx>
+          <ixy>8.6736199999999997e-19</ixy>
+          <ixz>-8.6736199999999997e-19</ixz>
+          <iyy>8.8882199999999994e-05</iyy>
+          <iyz>-2.38524e-18</iyz>
+          <izz>5.3500700000000001e-05</izz>
+        </inertia>
+      </inertial>
+      <collision name="caster_FR_wheel_link_contact_collision">
+        <pose>0 -0.012500000000000001 0 1.5707963000000003 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.025000000000000001</length>
+            <radius>0.037499999999999999</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode />
+          </contact>
+          <friction>
+            <ode>
+              <mu>0.80000000000000004</mu>
+              <mu2>0.80000000000000004</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name="caster_FR_wheel_link_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/caster_FR_wheel_link_visual.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.099999994 0.099999994 0.099999994 1</diffuse>
+          <ambient>0.099999994 0.099999994 0.099999994 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name="caster_RL_swivel_joint" type="revolute">
+      <pose relative_to="base_link">-0.20999999999999999 0.20999999999999999 0.084000000000000005 0 0 0</pose>
+      <parent>base_link</parent>
+      <child>caster_RL_swivel_link</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <effort>0</effort>
+          <velocity>100</velocity>
+          <lower>-inf</lower>
+          <upper>inf</upper>
+        </limit>
+        <dynamics>
+          <damping>0.0050000000000000001</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name="caster_RL_swivel_link">
+      <pose relative_to="caster_RL_swivel_joint">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>-0.016958299999999999 0.00111304 -0.018832600000000001 0 0 0</pose>
+        <mass>0.10741299999999999</mass>
+        <inertia>
+          <ixx>7.8250000000000005e-05</ixx>
+          <ixy>1.5592100000000001e-06</ixy>
+          <ixz>-3.01233e-05</ixz>
+          <iyy>8.9385199999999999e-05</iyy>
+          <iyz>3.3077699999999999e-06</iyz>
+          <izz>4.6554200000000002e-05</izz>
+        </inertia>
+      </inertial>
+      <collision name="caster_RL_swivel_link_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/caster_RL_swivel_link_collision.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="caster_RL_swivel_link_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/caster_RL_swivel_link_visual.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.187500015 0.187500015 0.187500015 1</diffuse>
+          <ambient>0.187500015 0.187500015 0.187500015 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name="caster_RL_wheel_joint" type="revolute">
+      <pose relative_to="caster_RL_swivel_link">-0.029999999999999999 0.012500000000000001 -0.0465 0 0 0</pose>
+      <parent>caster_RL_swivel_link</parent>
+      <child>caster_RL_wheel_link</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <effort>0</effort>
+          <velocity>100</velocity>
+          <lower>-inf</lower>
+          <upper>inf</upper>
+        </limit>
+        <dynamics>
+          <damping>0.0050000000000000001</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name="caster_RL_wheel_link">
+      <pose relative_to="caster_RL_wheel_joint">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>-1.38203e-10 -0.012500000000000001 -1.2489999999999999e-16 0 0 0</pose>
+        <mass>0.153476</mass>
+        <inertia>
+          <ixx>5.3500700000000001e-05</ixx>
+          <ixy>2.3418800000000001e-17</ixy>
+          <ixz>2.1684e-18</ixz>
+          <iyy>8.8882199999999994e-05</iyy>
+          <iyz>-2.8189300000000001e-18</iyz>
+          <izz>5.3500700000000001e-05</izz>
+        </inertia>
+      </inertial>
+      <collision name="caster_RL_wheel_link_contact_collision">
+        <pose>0 -0.012500000000000001 0 1.5707963000000003 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.025000000000000001</length>
+            <radius>0.037499999999999999</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode />
+          </contact>
+          <friction>
+            <ode>
+              <mu>0.80000000000000004</mu>
+              <mu2>0.80000000000000004</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name="caster_RL_wheel_link_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/caster_RL_wheel_link_visual.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.099999994 0.099999994 0.099999994 1</diffuse>
+          <ambient>0.099999994 0.099999994 0.099999994 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name="caster_RR_swivel_joint" type="revolute">
+      <pose relative_to="base_link">-0.20999999999999999 -0.20999999999999999 0.084000000000000005 0 0 0</pose>
+      <parent>base_link</parent>
+      <child>caster_RR_swivel_link</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <effort>0</effort>
+          <velocity>100</velocity>
+          <lower>-inf</lower>
+          <upper>inf</upper>
+        </limit>
+        <dynamics>
+          <damping>0.0050000000000000001</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name="caster_RR_swivel_link">
+      <pose relative_to="caster_RR_swivel_joint">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>-0.016958299999999999 0.00111304 -0.018832600000000001 0 0 0</pose>
+        <mass>0.10741299999999999</mass>
+        <inertia>
+          <ixx>7.8250000000000005e-05</ixx>
+          <ixy>1.5592100000000001e-06</ixy>
+          <ixz>-3.01233e-05</ixz>
+          <iyy>8.9385199999999999e-05</iyy>
+          <iyz>3.3077699999999999e-06</iyz>
+          <izz>4.6554200000000002e-05</izz>
+        </inertia>
+      </inertial>
+      <collision name="caster_RR_swivel_link_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/caster_RR_swivel_link_collision.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="caster_RR_swivel_link_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/caster_RR_swivel_link_visual.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.187500015 0.187500015 0.187500015 1</diffuse>
+          <ambient>0.187500015 0.187500015 0.187500015 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name="caster_RR_wheel_joint" type="revolute">
+      <pose relative_to="caster_RR_swivel_link">-0.029999999999999999 0.012500000000000001 -0.0465 0 0 0</pose>
+      <parent>caster_RR_swivel_link</parent>
+      <child>caster_RR_wheel_link</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <effort>0</effort>
+          <velocity>100</velocity>
+          <lower>-inf</lower>
+          <upper>inf</upper>
+        </limit>
+        <dynamics>
+          <damping>0.0050000000000000001</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name="caster_RR_wheel_link">
+      <pose relative_to="caster_RR_wheel_joint">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>-1.3820499999999999e-10 -0.012500000000000001 5.5511199999999995e-17 0 0 0</pose>
+        <mass>0.153476</mass>
+        <inertia>
+          <ixx>5.3500700000000001e-05</ixx>
+          <ixy>1.9082000000000001e-17</ixy>
+          <ixz>-3.4694499999999997e-18</ixz>
+          <iyy>8.8882199999999994e-05</iyy>
+          <iyz>-3.4694499999999997e-18</iyz>
+          <izz>5.3500700000000001e-05</izz>
+        </inertia>
+      </inertial>
+      <collision name="caster_RR_wheel_link_contact_collision">
+        <pose>0 -0.012500000000000001 0 1.5707963000000003 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.025000000000000001</length>
+            <radius>0.037499999999999999</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode />
+          </contact>
+          <friction>
+            <ode>
+              <mu>0.80000000000000004</mu>
+              <mu2>0.80000000000000004</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name="caster_RR_wheel_link_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/caster_RR_wheel_link_visual.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.099999994 0.099999994 0.099999994 1</diffuse>
+          <ambient>0.099999994 0.099999994 0.099999994 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name="lift_joint" type="prismatic">
+      <pose relative_to="base_link">-0.11700000000000001 -1.77636e-17 0.64000000000000001 0 0 0</pose>
+      <parent>base_link</parent>
+      <child>lift_carriage_link</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>0.44767699999999999</upper>
+          <effort>1000</effort>
+          <velocity>0.10000000000000001</velocity>
+        </limit>
+        <dynamics>
+          <damping>50</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name="lift_carriage_link">
+      <pose relative_to="lift_joint">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0.073745215159157912 0.0018385475066253481 -0.016179980948926399 0 0 0</pose>
+        <mass>16.008818000000002</mass>
+        <inertia>
+          <ixx>0.27123493359350259</ixx>
+          <ixy>-0.00026704411196674677</ixy>
+          <ixz>-0.030592002689450622</ixz>
+          <iyy>0.22614330568407831</iyy>
+          <iyz>0.0033318735031453131</iyz>
+          <izz>0.1588544811856043</izz>
+        </inertia>
+      </inertial>
+      <collision name="lift_carriage_link_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/lift_carriage_link_collision.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <collision name="lift_carriage_link_fixed_joint_lump__left_link0_collision_1">
+        <pose>0.11199099999999999 0.11459999999999999 0.118728 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/left_link0_collision.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <collision name="lift_carriage_link_fixed_joint_lump__right_link0_collision_2">
+        <pose>0.11199099999999999 -0.11459900000000001 0.118729 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/right_link0_collision.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="lift_carriage_link_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/lift_carriage_link_visual.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>1 1 1 1</diffuse>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+      <visual name="lift_carriage_link_fixed_joint_lump__left_link0_visual_1">
+        <pose>0.11199099999999999 0.11459999999999999 0.118728 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/left_link0_visual.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>1 1 1 1</diffuse>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+      <visual name="lift_carriage_link_fixed_joint_lump__right_link0_visual_2">
+        <pose>0.11199099999999999 -0.11459900000000001 0.118729 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/right_link0_visual.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>1 1 1 1</diffuse>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name="left_shoulder_pan" type="revolute">
+      <pose relative_to="lift_carriage_link">0.11199099999999999 0.11459999999999999 0.118728 0 0 0</pose>
+      <parent>lift_carriage_link</parent>
+      <child>left_link1</child>
+      <axis>
+        <xyz>1.73472e-18 0.5 0.86602500000000004</xyz>
+        <limit>
+          <lower>-1.9198599999999999</lower>
+          <upper>1.9198599999999999</upper>
+          <effort>2.8999999999999999</effort>
+          <velocity>4.7000000000000002</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.10000000000000001</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name="left_link1">
+      <pose relative_to="left_shoulder_pan">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0.031384500000000003 0.025712599999999999 0.042737499999999998 0 0 0</pose>
+        <mass>0.10567799999999999</mass>
+        <inertia>
+          <ixx>0.00010812899999999999</ixx>
+          <ixy>-6.5224499999999995e-07</ixy>
+          <ixz>-2.2775100000000001e-06</ixz>
+          <iyy>8.5574299999999998e-05</iyy>
+          <iyz>-3.5216399999999997e-05</iyz>
+          <izz>5.0915699999999998e-05</izz>
+        </inertia>
+      </inertial>
+      <collision name="left_link1_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/left_link1_collision.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="left_link1_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/left_link1_visual.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>1 1 1 1</diffuse>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name="left_shoulder_lift" type="revolute">
+      <pose relative_to="left_link1">0.031316900000000002 0.056331800000000001 0.0669854 0 0 0</pose>
+      <parent>left_link1</parent>
+      <child>left_link2</child>
+      <axis>
+        <xyz>3.94299e-17 0.86602500000000004 -0.5</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>3.4906600000000001</upper>
+          <effort>2.8999999999999999</effort>
+          <velocity>4.7000000000000002</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.10000000000000001</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name="left_link2">
+      <pose relative_to="left_shoulder_lift">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>-0.079632599999999998 -0.0080090100000000004 0.0118058 0 0 0</pose>
+        <mass>0.13034599999999999</mass>
+        <inertia>
+          <ixx>5.8165100000000003e-05</ixx>
+          <ixy>1.37129e-05</ixy>
+          <ixz>2.07828e-05</ixz>
+          <iyy>0.00020389599999999999</iyy>
+          <iyz>7.2417499999999997e-06</iyz>
+          <izz>0.00021460300000000001</izz>
+        </inertia>
+      </inertial>
+      <collision name="left_link2_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/left_link2_collision.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="left_link2_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/left_link2_visual.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>1 1 1 1</diffuse>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name="left_elbow_flex" type="revolute">
+      <pose relative_to="left_link2">-0.112439 0.015791699999999999 0.024331700000000001 0 0 0</pose>
+      <parent>left_link2</parent>
+      <child>left_link3</child>
+      <axis>
+        <xyz>0 0.86602500000000004 -0.5</xyz>
+        <limit>
+          <lower>-3.3859400000000002</lower>
+          <upper>0</upper>
+          <effort>2.8999999999999999</effort>
+          <velocity>4.7000000000000002</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.10000000000000001</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name="left_link3">
+      <pose relative_to="left_elbow_flex">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0.086058399999999993 -0.0098791999999999994 0.0071498300000000002 0 0 0</pose>
+        <mass>0.12275999999999999</mass>
+        <inertia>
+          <ixx>3.9805999999999998e-05</ixx>
+          <ixy>-7.5593499999999999e-06</ixy>
+          <ixz>-4.1397200000000001e-06</ixz>
+          <iyy>0.000205377</iyy>
+          <iyz>1.06309e-05</iyz>
+          <izz>0.000218521</izz>
+        </inertia>
+      </inertial>
+      <collision name="left_link3_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/left_link3_collision.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="left_link3_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/left_link3_visual.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>1 1 1 1</diffuse>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name="left_wrist_flex" type="revolute">
+      <pose relative_to="left_link3">0.134412 0.0038371099999999999 0.00248613 0 0 0</pose>
+      <parent>left_link3</parent>
+      <child>left_link4</child>
+      <axis>
+        <xyz>6.2449999999999997e-17 0.86602500000000004 -0.5</xyz>
+        <limit>
+          <lower>-1.6580600000000001</lower>
+          <upper>1.6580600000000001</upper>
+          <effort>2.8999999999999999</effort>
+          <velocity>4.7000000000000002</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.10000000000000001</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name="left_link4">
+      <pose relative_to="left_wrist_flex">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0.038679499999999999 -0.0026946399999999999 0.0014056699999999999 0 0 0</pose>
+        <mass>0.068038500000000002</mass>
+        <inertia>
+          <ixx>2.3681900000000001e-05</ixx>
+          <ixy>-2.9955400000000002e-06</ixy>
+          <ixz>1.7759100000000001e-06</ixz>
+          <iyy>2.45761e-05</iyy>
+          <iyz>6.6375700000000002e-06</iyz>
+          <izz>3.2802799999999997e-05</izz>
+        </inertia>
+      </inertial>
+      <collision name="left_link4_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/left_link4_collision.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="left_link4_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/left_link4_visual.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>1 1 1 1</diffuse>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name="left_wrist_roll" type="revolute">
+      <pose relative_to="left_link4">0.029347100000000001 -0.0103821 0.0054595800000000003 0 0 0</pose>
+      <parent>left_link4</parent>
+      <child>left_link5</child>
+      <axis>
+        <xyz>1 -9.1491000000000001e-17 1.07576e-17</xyz>
+        <limit>
+          <lower>-2.74017</lower>
+          <upper>2.8448899999999999</upper>
+          <effort>2.8999999999999999</effort>
+          <velocity>4.7000000000000002</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.10000000000000001</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name="left_link5">
+      <pose relative_to="left_wrist_roll">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0.056300099999999999 0.0052339300000000004 -0.0050267899999999997 0 0 0</pose>
+        <mass>0.111192</mass>
+        <inertia>
+          <ixx>6.0096200000000002e-05</ixx>
+          <ixy>7.8386199999999995e-06</ixy>
+          <ixz>4.5932999999999997e-06</ixz>
+          <iyy>5.1944799999999998e-05</iyy>
+          <iyz>-1.0291e-06</iyz>
+          <izz>5.8091000000000003e-05</izz>
+        </inertia>
+      </inertial>
+      <collision name="left_link5_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/left_link5_collision.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="left_link5_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/left_link5_visual.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>1 1 1 1</diffuse>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name="left_gripper" type="revolute">
+      <pose relative_to="left_link5">0.055773499999999997 -0.0016484399999999999 0.023432399999999999 0 0 0</pose>
+      <parent>left_link5</parent>
+      <child>left_jaw</child>
+      <axis>
+        <xyz>2.7319799999999998e-17 0.86602500000000004 -0.5</xyz>
+        <limit>
+          <lower>-0.17453299999999999</lower>
+          <upper>1.74533</upper>
+          <effort>2.8999999999999999</effort>
+          <velocity>4.7000000000000002</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.10000000000000001</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name="left_jaw">
+      <pose relative_to="left_gripper">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0.0018332699999999999 0.0252077 0.020044699999999999 0 0 0</pose>
+        <mass>0.0145013</mass>
+        <inertia>
+          <ixx>7.9271700000000005e-06</ixx>
+          <ixy>-2.1935199999999999e-07</ixy>
+          <ixz>-3.69998e-07</ixz>
+          <iyy>5.2284499999999999e-06</iyy>
+          <iyz>-1.7901799999999999e-06</iyz>
+          <izz>3.3885700000000001e-06</izz>
+        </inertia>
+      </inertial>
+      <collision name="left_jaw_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/left_jaw_collision.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="left_jaw_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/left_jaw_visual.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>1 1 1 1</diffuse>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name="right_shoulder_pan" type="revolute">
+      <pose relative_to="lift_carriage_link">0.11199099999999999 -0.11459900000000001 0.118729 0 0 0</pose>
+      <parent>lift_carriage_link</parent>
+      <child>right_link1</child>
+      <axis>
+        <xyz>1.73472e-18 -0.5 0.86602500000000004</xyz>
+        <limit>
+          <lower>-1.9198599999999999</lower>
+          <upper>1.9198599999999999</upper>
+          <effort>2.8999999999999999</effort>
+          <velocity>4.7000000000000002</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.10000000000000001</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name="right_link1">
+      <pose relative_to="right_shoulder_pan">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0.031384500000000003 -0.0241554 0.043636500000000002 0 0 0</pose>
+        <mass>0.10567799999999999</mass>
+        <inertia>
+          <ixx>0.00010812899999999999</ixx>
+          <ixy>1.64626e-06</ixy>
+          <ixz>-1.7036099999999999e-06</ixz>
+          <iyy>9.0078600000000002e-05</iyy>
+          <iyz>3.26158e-05</iyz>
+          <izz>4.6411400000000001e-05</izz>
+        </inertia>
+      </inertial>
+      <collision name="right_link1_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/right_link1_collision.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="right_link1_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/right_link1_visual.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>1 1 1 1</diffuse>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name="right_shoulder_lift" type="revolute">
+      <pose relative_to="right_link1">0.031316900000000002 -0.029845199999999999 0.082277400000000001 0 0 0</pose>
+      <parent>right_link1</parent>
+      <child>right_link2</child>
+      <axis>
+        <xyz>3.94299e-17 0.86602500000000004 0.5</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>3.4906600000000001</upper>
+          <effort>2.8999999999999999</effort>
+          <velocity>4.7000000000000002</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.10000000000000001</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name="right_link2">
+      <pose relative_to="right_shoulder_lift">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>-0.079632599999999998 -0.014228599999999999 -0.0010330999999999999 0 0 0</pose>
+        <mass>0.13034599999999999</mass>
+        <inertia>
+          <ixx>5.8165100000000003e-05</ixx>
+          <ixy>-1.1141999999999999e-05</ixy>
+          <ixz>2.2267099999999999e-05</ixz>
+          <iyy>0.00020565399999999999</iyy>
+          <iyz>-8.2570500000000008e-06</iyz>
+          <izz>0.00021284400000000001</izz>
+        </inertia>
+      </inertial>
+      <collision name="right_link2_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/right_link2_collision.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="right_link2_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/right_link2_visual.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>1 1 1 1</diffuse>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name="right_elbow_flex" type="revolute">
+      <pose relative_to="right_link2">-0.112439 -0.013176 0.025841900000000001 0 0 0</pose>
+      <parent>right_link2</parent>
+      <child>right_link3</child>
+      <axis>
+        <xyz>0 0.86602500000000004 0.5</xyz>
+        <limit>
+          <lower>-3.3859400000000002</lower>
+          <upper>0</upper>
+          <effort>2.8999999999999999</effort>
+          <velocity>4.7000000000000002</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.10000000000000001</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name="right_link3">
+      <pose relative_to="right_elbow_flex">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0.086050399999999999 -0.0111313 -0.0049815299999999996 0 0 0</pose>
+        <mass>0.122792</mass>
+        <inertia>
+          <ixx>3.9805399999999997e-05</ixx>
+          <ixy>-1.9408900000000001e-07</ixy>
+          <ixz>-8.6165100000000003e-06</ixz>
+          <iyy>0.000206021</iyy>
+          <iyz>-1.10061e-05</iyz>
+          <izz>0.00021786099999999999</izz>
+        </inertia>
+      </inertial>
+      <collision name="right_link3_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/right_link3_collision.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="right_link3_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/right_link3_visual.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>1 1 1 1</diffuse>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name="right_wrist_flex" type="revolute">
+      <pose relative_to="right_link3">0.134412 -0.00023449699999999999 0.0045660900000000001 0 0 0</pose>
+      <parent>right_link3</parent>
+      <child>right_link4</child>
+      <axis>
+        <xyz>6.2449999999999997e-17 0.86602500000000004 0.5</xyz>
+        <limit>
+          <lower>-1.6580600000000001</lower>
+          <upper>1.6580600000000001</upper>
+          <effort>2.8999999999999999</effort>
+          <velocity>4.7000000000000002</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.10000000000000001</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name="right_link4">
+      <pose relative_to="right_wrist_flex">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0.038679600000000001 -0.0025647500000000002 -0.00163086 0 0 0</pose>
+        <mass>0.0680394</mass>
+        <inertia>
+          <ixx>2.3682000000000001e-05</ixx>
+          <ixy>-3.0357500000000001e-06</ixy>
+          <ixz>-1.7062399999999999e-06</ixz>
+          <iyy>2.49978e-05</iyy>
+          <iyz>-6.8810900000000002e-06</iyz>
+          <izz>3.2381100000000001e-05</izz>
+        </inertia>
+      </inertial>
+      <collision name="right_link4_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/right_link4_collision.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="right_link4_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/right_link4_visual.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>1 1 1 1</diffuse>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name="right_wrist_roll" type="revolute">
+      <pose relative_to="right_link4">0.029347100000000001 -0.0099191999999999995 -0.0062614100000000002 0 0 0</pose>
+      <parent>right_link4</parent>
+      <child>right_link5</child>
+      <axis>
+        <xyz>1 -5.5061799999999998e-17 -7.3854800000000005e-17</xyz>
+        <limit>
+          <lower>-2.74017</lower>
+          <upper>2.8448899999999999</upper>
+          <effort>2.8999999999999999</effort>
+          <velocity>4.7000000000000002</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.10000000000000001</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name="right_link5">
+      <pose relative_to="right_wrist_roll">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0.056300099999999999 0.0069703100000000004 0.0020194599999999998 0 0 0</pose>
+        <mass>0.111191</mass>
+        <inertia>
+          <ixx>6.0095500000000001e-05</ixx>
+          <ixy>-5.8598800000000003e-08</ixy>
+          <ixz>9.0851099999999995e-06</ixz>
+          <iyy>5.7445199999999997e-05</iyy>
+          <iyz>-2.1465499999999998e-06</iyz>
+          <izz>5.2589700000000002e-05</izz>
+        </inertia>
+      </inertial>
+      <collision name="right_link5_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/right_link5_collision.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="right_link5_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/right_link5_visual.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>1 1 1 1</diffuse>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name="right_gripper" type="revolute">
+      <pose relative_to="right_link5">0.055773499999999997 -0.021117299999999999 0.0102886 0 0 0</pose>
+      <parent>right_link5</parent>
+      <child>right_jaw</child>
+      <axis>
+        <xyz>2.7319799999999998e-17 0.86602500000000004 0.5</xyz>
+        <limit>
+          <lower>-0.17453299999999999</lower>
+          <upper>1.74533</upper>
+          <effort>2.8999999999999999</effort>
+          <velocity>4.7000000000000002</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.10000000000000001</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name="right_jaw">
+      <pose relative_to="right_gripper">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0.0018332699999999999 -0.0047554099999999998 0.031852800000000001 0 0 0</pose>
+        <mass>0.0145013</mass>
+        <inertia>
+          <ixx>7.9271700000000005e-06</ixx>
+          <ixy>2.1075200000000001e-07</ixy>
+          <ixz>-3.7496400000000002e-07</ixz>
+          <iyy>5.3988800000000004e-06</iyy>
+          <iyz>1.69179e-06</iyz>
+          <izz>3.21814e-06</izz>
+        </inertia>
+      </inertial>
+      <collision name="right_jaw_collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/right_jaw_collision.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="right_jaw_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/right_jaw_visual.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>1 1 1 1</diffuse>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name="wheel_left_suspension" type="prismatic">
+      <pose relative_to="base_link">0 0.067000000000000004 0.081000000000000003 0 0 0</pose>
+      <parent>base_link</parent>
+      <child>wheel_left_susp_link</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>0.012</upper>
+          <effort>2000</effort>
+          <velocity>1</velocity>
+        </limit>
+        <dynamics>
+          <damping>400</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>34000</spring_stiffness>
+        </dynamics>
+      </axis>
+      <physics>
+        <ode>
+          <limit>
+            <cfm>0</cfm>
+            <erp>0.20000000000000001</erp>
+          </limit>
+        </ode>
+      </physics>
+    </joint>
+    <link name="wheel_left_susp_link">
+      <pose relative_to="wheel_left_suspension">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.29999999999999999</mass>
+        <inertia>
+          <ixx>0.0001</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.0001</iyy>
+          <iyz>0</iyz>
+          <izz>0.0001</izz>
+        </inertia>
+      </inertial>
+    </link>
+    <joint name="wheel_left_joint" type="revolute">
+      <pose relative_to="wheel_left_susp_link">0 0 0 0 0 0</pose>
+      <parent>wheel_left_susp_link</parent>
+      <child>wheel_left_link</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <effort>16</effort>
+          <velocity>27</velocity>
+          <lower>-inf</lower>
+          <upper>inf</upper>
+        </limit>
+        <dynamics>
+          <damping>0.10000000000000001</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name="wheel_left_link">
+      <pose relative_to="wheel_left_joint">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>3.0436699999999998e-10 0.092999999999999999 2.7755599999999997e-17 0 0 0</pose>
+        <mass>2.3999999999999999</mass>
+        <inertia>
+          <ixx>0.0047210899999999998</ixx>
+          <ixy>9.74916e-19</ixy>
+          <ixz>-2.03904e-20</ixz>
+          <iyy>0.0086321799999999997</iyy>
+          <iyz>-3.4694499999999997e-18</iyz>
+          <izz>0.0047210899999999998</izz>
+        </inertia>
+      </inertial>
+      <collision name="wheel_left_link_contact_collision">
+        <pose>0 0.092999999999999999 0 1.5707963000000003 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.044999999999999998</length>
+            <radius>0.085000000000000006</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode />
+          </contact>
+          <friction>
+            <ode>
+              <mu>1</mu>
+              <mu2>1</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name="wheel_left_link_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/wheel_left_link_visual.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.099999994 0.099999994 0.099999994 1</diffuse>
+          <ambient>0.099999994 0.099999994 0.099999994 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name="wheel_right_suspension" type="prismatic">
+      <pose relative_to="base_link">0 -0.067000000000000004 0.081000000000000003 0 0 0</pose>
+      <parent>base_link</parent>
+      <child>wheel_right_susp_link</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>0.012</upper>
+          <effort>2000</effort>
+          <velocity>1</velocity>
+        </limit>
+        <dynamics>
+          <damping>400</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>34000</spring_stiffness>
+        </dynamics>
+      </axis>
+      <physics>
+        <ode>
+          <limit>
+            <cfm>0</cfm>
+            <erp>0.20000000000000001</erp>
+          </limit>
+        </ode>
+      </physics>
+    </joint>
+    <link name="wheel_right_susp_link">
+      <pose relative_to="wheel_right_suspension">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.29999999999999999</mass>
+        <inertia>
+          <ixx>0.0001</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.0001</iyy>
+          <iyz>0</iyz>
+          <izz>0.0001</izz>
+        </inertia>
+      </inertial>
+    </link>
+    <joint name="wheel_right_joint" type="revolute">
+      <pose relative_to="wheel_right_susp_link">0 0 0 0 0 0</pose>
+      <parent>wheel_right_susp_link</parent>
+      <child>wheel_right_link</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <effort>16</effort>
+          <velocity>27</velocity>
+          <lower>-inf</lower>
+          <upper>inf</upper>
+        </limit>
+        <dynamics>
+          <damping>0.10000000000000001</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name="wheel_right_link">
+      <pose relative_to="wheel_right_joint">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>3.0436699999999998e-10 -0.092999999999999999 6.9388900000000005e-17 0 0 0</pose>
+        <mass>2.3999999999999999</mass>
+        <inertia>
+          <ixx>0.0047210899999999998</ixx>
+          <ixy>1.4018399999999999e-19</ixy>
+          <ixz>-2.8164200000000001e-19</ixz>
+          <iyy>0.0086321799999999997</iyy>
+          <iyz>3.4694499999999997e-18</iyz>
+          <izz>0.0047210899999999998</izz>
+        </inertia>
+      </inertial>
+      <collision name="wheel_right_link_contact_collision">
+        <pose>0 -0.092999999999999999 0 1.5707963000000003 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.044999999999999998</length>
+            <radius>0.085000000000000006</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode />
+          </contact>
+          <friction>
+            <ode>
+              <mu>1</mu>
+              <mu2>1</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name="wheel_right_link_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://sysmic_v2/meshes/wheel_right_link_visual.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.099999994 0.099999994 0.099999994 1</diffuse>
+          <ambient>0.099999994 0.099999994 0.099999994 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <frame name="left_arm_mount" attached_to="lift_carriage_link">
+      <pose>0.11199099999999999 0.11459999999999999 0.118728 0 0 0</pose>
+    </frame>
+    <frame name="left_link0" attached_to="left_arm_mount">
+      <pose>0 0 0 0 0 0</pose>
+    </frame>
+    <frame name="right_arm_mount" attached_to="lift_carriage_link">
+      <pose>0.11199099999999999 -0.11459900000000001 0.118729 0 0 0</pose>
+    </frame>
+    <frame name="right_link0" attached_to="right_arm_mount">
+      <pose>0 0 0 0 0 0</pose>
+    </frame>
+    <plugin filename="gz-sim-diff-drive-system" name="gz::sim::systems::DiffDrive">
+      <left_joint>wheel_left_joint</left_joint>
+      <right_joint>wheel_right_joint</right_joint>
+      <wheel_separation>0.32</wheel_separation>
+      <wheel_radius>0.085</wheel_radius>
+      <topic>/sysmic/cmd_vel</topic>
+      <odom_topic>/sysmic/odom</odom_topic>
+      <tf_topic>/sysmic/tf</tf_topic>
+      <frame_id>odom</frame_id>
+      <child_frame_id>base_link</child_frame_id>
+      <odom_publish_frequency>30</odom_publish_frequency>
+      <max_linear_velocity>1.0</max_linear_velocity>
+      <max_angular_velocity>2.0</max_angular_velocity>
+      <max_linear_acceleration>1.0</max_linear_acceleration>
+      <max_angular_acceleration>3.0</max_angular_acceleration>
+    </plugin>
+    <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher">
+      <topic>/sysmic/joint_states</topic>
+    </plugin>
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>lift_joint</joint_name>
+      <topic>/sysmic/lift</topic>
+      <p_gain>30000</p_gain>
+      <i_gain>8000</i_gain>
+      <d_gain>3000</d_gain>
+      <i_max>400</i_max>
+      <i_min>-400</i_min>
+      <cmd_max>1000</cmd_max>
+      <cmd_min>-1000</cmd_min>
+    </plugin>
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>left_shoulder_pan</joint_name>
+      <topic>/sysmic/left_shoulder_pan</topic>
+      <p_gain>40</p_gain>
+      <i_gain>10</i_gain>
+      <d_gain>1.0</d_gain>
+      <i_max>1.0</i_max>
+      <i_min>-1.0</i_min>
+      <cmd_max>2.9</cmd_max>
+      <cmd_min>-2.9</cmd_min>
+    </plugin>
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>left_shoulder_lift</joint_name>
+      <topic>/sysmic/left_shoulder_lift</topic>
+      <p_gain>40</p_gain>
+      <i_gain>10</i_gain>
+      <d_gain>1.0</d_gain>
+      <i_max>1.0</i_max>
+      <i_min>-1.0</i_min>
+      <cmd_max>2.9</cmd_max>
+      <cmd_min>-2.9</cmd_min>
+    </plugin>
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>left_elbow_flex</joint_name>
+      <topic>/sysmic/left_elbow_flex</topic>
+      <p_gain>40</p_gain>
+      <i_gain>10</i_gain>
+      <d_gain>1.0</d_gain>
+      <i_max>1.0</i_max>
+      <i_min>-1.0</i_min>
+      <cmd_max>2.9</cmd_max>
+      <cmd_min>-2.9</cmd_min>
+    </plugin>
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>left_wrist_flex</joint_name>
+      <topic>/sysmic/left_wrist_flex</topic>
+      <p_gain>40</p_gain>
+      <i_gain>10</i_gain>
+      <d_gain>1.0</d_gain>
+      <i_max>1.0</i_max>
+      <i_min>-1.0</i_min>
+      <cmd_max>2.9</cmd_max>
+      <cmd_min>-2.9</cmd_min>
+    </plugin>
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>left_wrist_roll</joint_name>
+      <topic>/sysmic/left_wrist_roll</topic>
+      <p_gain>40</p_gain>
+      <i_gain>10</i_gain>
+      <d_gain>1.0</d_gain>
+      <i_max>1.0</i_max>
+      <i_min>-1.0</i_min>
+      <cmd_max>2.9</cmd_max>
+      <cmd_min>-2.9</cmd_min>
+    </plugin>
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>left_gripper</joint_name>
+      <topic>/sysmic/left_gripper</topic>
+      <p_gain>40</p_gain>
+      <i_gain>10</i_gain>
+      <d_gain>1.0</d_gain>
+      <i_max>1.0</i_max>
+      <i_min>-1.0</i_min>
+      <cmd_max>2.9</cmd_max>
+      <cmd_min>-2.9</cmd_min>
+    </plugin>
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>right_shoulder_pan</joint_name>
+      <topic>/sysmic/right_shoulder_pan</topic>
+      <p_gain>40</p_gain>
+      <i_gain>10</i_gain>
+      <d_gain>1.0</d_gain>
+      <i_max>1.0</i_max>
+      <i_min>-1.0</i_min>
+      <cmd_max>2.9</cmd_max>
+      <cmd_min>-2.9</cmd_min>
+    </plugin>
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>right_shoulder_lift</joint_name>
+      <topic>/sysmic/right_shoulder_lift</topic>
+      <p_gain>40</p_gain>
+      <i_gain>10</i_gain>
+      <d_gain>1.0</d_gain>
+      <i_max>1.0</i_max>
+      <i_min>-1.0</i_min>
+      <cmd_max>2.9</cmd_max>
+      <cmd_min>-2.9</cmd_min>
+    </plugin>
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>right_elbow_flex</joint_name>
+      <topic>/sysmic/right_elbow_flex</topic>
+      <p_gain>40</p_gain>
+      <i_gain>10</i_gain>
+      <d_gain>1.0</d_gain>
+      <i_max>1.0</i_max>
+      <i_min>-1.0</i_min>
+      <cmd_max>2.9</cmd_max>
+      <cmd_min>-2.9</cmd_min>
+    </plugin>
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>right_wrist_flex</joint_name>
+      <topic>/sysmic/right_wrist_flex</topic>
+      <p_gain>40</p_gain>
+      <i_gain>10</i_gain>
+      <d_gain>1.0</d_gain>
+      <i_max>1.0</i_max>
+      <i_min>-1.0</i_min>
+      <cmd_max>2.9</cmd_max>
+      <cmd_min>-2.9</cmd_min>
+    </plugin>
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>right_wrist_roll</joint_name>
+      <topic>/sysmic/right_wrist_roll</topic>
+      <p_gain>40</p_gain>
+      <i_gain>10</i_gain>
+      <d_gain>1.0</d_gain>
+      <i_max>1.0</i_max>
+      <i_min>-1.0</i_min>
+      <cmd_max>2.9</cmd_max>
+      <cmd_min>-2.9</cmd_min>
+    </plugin>
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>right_gripper</joint_name>
+      <topic>/sysmic/right_gripper</topic>
+      <p_gain>40</p_gain>
+      <i_gain>10</i_gain>
+      <d_gain>1.0</d_gain>
+      <i_max>1.0</i_max>
+      <i_min>-1.0</i_min>
+      <cmd_max>2.9</cmd_max>
+      <cmd_min>-2.9</cmd_min>
+    </plugin>
+  </model>
+</sdf>
