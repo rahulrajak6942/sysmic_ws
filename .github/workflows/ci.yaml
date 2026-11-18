@@ -1,0 +1,30 @@
+name: ROS2 CI
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v6
+
+    - name: Build Docker image
+      run: docker compose --profile cpu up --build -d
+
+    - name: Build workspace
+      run: |
+        docker exec sysmic bash -c "
+          source /opt/ros/jazzy/setup.bash &&
+          source /sysmic_ws/install/setup.bash &&
+          colcon build
+        "
+
+    - name: Clean up container
+      if: always()
+      run: docker compose --profile cpu down
