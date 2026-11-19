@@ -24,10 +24,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'sysmic_rl = sysmic_rl:main',
             'sysmic_rl_train = sysmic_rl.train:main',
             'sysmic_rl_test = sysmic_rl.test:main',
-            'sysmic_rl_run = sysmic_rl.run:main',
         ],
     },
 )

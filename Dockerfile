@@ -13,6 +13,10 @@ COPY ./fastdds.xml /fastdds.xml
 
 WORKDIR /sysmic_ws
 COPY ./src ./src
+COPY ./requirements.txt ./requirements.txt
+
+RUN python3 -m venv .venv && source .venv/bin/activate
+RUN pip install --no-cache-dir -r requirements.txt
 
 RUN rosdep install --from-paths src --ignore-src -y --rosdistro $ROS_DISTRO
 
