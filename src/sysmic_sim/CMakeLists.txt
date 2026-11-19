@@ -10,7 +10,7 @@ find_package(ament_cmake REQUIRED)
 # Robot description, launch files, RViz config and the simulation scripts.
 # The simulation scripts (sim/) run on the conda Python, not as ROS nodes.
 install(
-  DIRECTORY description launch rviz sim
+  DIRECTORY description launch mjcf rviz sim
   DESTINATION share/${PROJECT_NAME}
   PATTERN "__pycache__" EXCLUDE
 )
