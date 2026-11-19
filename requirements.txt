@@ -1,0 +1,4 @@
+gymnasium>=0.29.1
+mujoco>=3.0.0
+stable-baselines3>=2.4.0
+torch>=2.8.0
