@@ -66,6 +66,8 @@ class SysmicV2Env(gym.Env):
         ]
         self.total_joints = self.left_arm_joints + self.right_arm_joints
 
+        self.joint_indices = [self.model.joint(jname).qposadr[0] for jname in self.total_joints]
+
         joint_to_actuator = {}
         for actuator_id in range(self.model.nu):
             joint_id = self.model.actuator_trnid[actuator_id, 0]
@@ -77,8 +79,8 @@ class SysmicV2Env(gym.Env):
             self.actuator_ids.append(joint_to_actuator[joint_id])
         self.actuator_ids = np.array(self.actuator_ids, dtype=int)
 
-        self.min_limits = [self.model.jnt_range[self.model.joint(jnt).id, 0] for jnt in self.total_joints]
-        self.max_limits = [self.model.jnt_range[self.model.joint(jnt).id, 1] for jnt in self.total_joints]
+        self.min_limits = [self.model.jnt_range[self.model.joint(jname).id, 0]  for jname in self.total_joints]
+        self.max_limits = [self.model.jnt_range[self.model.joint(jname).id, 1]  for jname in self.total_joints]
 
         self.frame_skip = 50
         self.left_target_pos = np.zeros(3, dtype=np.float32)
@@ -109,10 +111,10 @@ class SysmicV2Env(gym.Env):
         return collisions
 
     def _get_obs(self):
-        left_arm_qpos = [self.data.qpos[self.model.joint(jname).qposadr[0]] for jname in self.left_arm_joints]
+        left_arm_qpos = self.data.qpos[self.joint_indices[:6]]
         left_ee_pos = self.data.body('left_jaw').xpos.copy()
         left_ee_quat = self.data.body('left_jaw').xquat.copy()
-        right_arm_qpos = [self.data.qpos[self.model.joint(jname).qposadr[0]] for jname in self.right_arm_joints]
+        right_arm_qpos = self.data.qpos[self.joint_indices[6:]]
         right_ee_pos = self.data.body('right_jaw').xpos.copy()
         right_ee_quat = self.data.body('right_jaw').xquat.copy()
         current_state = np.concatenate([
@@ -149,8 +151,8 @@ class SysmicV2Env(gym.Env):
         self.left_target_quat = self._random_quat_wxyz()
         self.left_target_gripper = float(
             np.random.uniform(
-                self.model.jnt_range[self.model.joint(self.left_arm_joints[5]).id, 0],
-                self.model.jnt_range[self.model.joint(self.left_arm_joints[5]).id, 1],
+                self.min_limits[5],
+                self.max_limits[5],
             )
         )
 
@@ -165,8 +167,8 @@ class SysmicV2Env(gym.Env):
         self.right_target_quat = self._random_quat_wxyz()
         self.right_target_gripper = float(
             np.random.uniform(
-                self.model.jnt_range[self.model.joint(self.right_arm_joints[5]).id, 0],
-                self.model.jnt_range[self.model.joint(self.right_arm_joints[5]).id, 1],
+                self.min_limits[11],
+                self.max_limits[11],
             )
         )
 
@@ -205,9 +207,8 @@ class SysmicV2Env(gym.Env):
 
         if reposition:
             mujoco.mj_resetData(self.model, self.data)
-            joint_indices = [self.model.joint(jname).qposaddr[0] for jname in self.total_joints]
-            init_qpos = np.random.uniform(-0.2, 0.2, size=len(joint_indices))
-            self.data.qpos[joint_indices] = np.clip(init_qpos, self.min_limits, self.max_limits)
+            init_qpos = np.random.uniform(-0.2, 0.2, size=len(self.joint_indices))
+            self.data.qpos[self.joint_indices] = np.clip(init_qpos, self.min_limits, self.max_limits)
 
         if left_target_pos is not None or left_target_quat is not None or left_target_gripper is not None or right_target_pos is not None or right_target_quat is not None or right_target_gripper is not None:
             self._set_target(
@@ -238,10 +239,10 @@ class SysmicV2Env(gym.Env):
         return obs, info
 
     def step(self, action):
-        scaled_action = np.clip(action, -1.0, 1.0) * 0.05
+        scaled_action = np.clip(action, -1.0, 1.0) * 0.01
         current_qpos = np.concatenate([
-            [self.data.qpos[self.model.joint(jname).qposadr[0]] for jname in self.left_arm_joints],
-            [self.data.qpos[self.model.joint(jname).qposadr[0]] for jname in self.right_arm_joints]
+            self.data.qpos[self.joint_indices[:6]],
+            self.data.qpos[self.joint_indices[6:]]
         ])
         target_qpos = current_qpos + scaled_action
 
