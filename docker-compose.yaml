@@ -1,0 +1,52 @@
+services:
+  sysmic-cpu:
+    build:
+      context: .
+    image: sysmic
+    container_name: sysmic
+    profiles:
+      - cpu
+    network_mode: host
+    privileged: true
+    stdin_open: true
+    tty: true
+    ipc: host
+    environment:
+      - DISPLAY=${DISPLAY:-}
+      - FASTRTPS_DEFAULT_PROFILES_FILE=/fastdds.xml
+      - QT_X11_NO_MITSHM=1
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ${XAUTHORITY:-/tmp/.Xauthority}:/root/.Xauthority
+      - ./fastdds.xml:/fastdds.xml:rw
+  sysmic-gpu:
+    build:
+      context: .
+    image: sysmic
+    container_name: sysmic
+    profiles:
+      - gpu
+    network_mode: host
+    privileged: true
+    stdin_open: true
+    tty: true
+    ipc: host
+    environment:
+      - DISPLAY=${DISPLAY:-}
+      - FASTRTPS_DEFAULT_PROFILES_FILE=/fastdds.xml
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      - QT_X11_NO_MITSHM=1
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ${XAUTHORITY:-/tmp/.Xauthority}:/root/.Xauthority
+      - ./fastdds.xml:/fastdds.xml:rw
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
