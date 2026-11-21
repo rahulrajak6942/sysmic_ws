@@ -19,7 +19,7 @@ def make_env(mjcf_file: str):
     return initialize_env
 
 def main():
-    model_type = 'SAC'
+    model_type = 'PPO'
     mjcf_file = os.path.join(get_package_share_directory('sysmic_sim'), 'mjcf', 'sysmic_v2_scene.xml')
     time_steps = 2_000_000
 
