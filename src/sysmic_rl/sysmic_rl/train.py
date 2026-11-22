@@ -129,14 +129,14 @@ def main():
         callback=checkpoint_callback,
         progress_bar=True
     )
-    model.save(os.path.abspath(
+    model.save(os.path.abspath(os.path.join(
         get_package_share_directory('sysmic_rl'),
         '..', '..', '..',
         'src',
         'sysmic_rl',
         'models',
-        f'sysmic_v2_{model_type}')
-    )
+        f'sysmic_v2_{model_type}'
+    )))
     print(f'sysmic_v2_{model_type} model saved.')
 
 if __name__ == '__main__':
