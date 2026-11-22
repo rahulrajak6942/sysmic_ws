@@ -216,9 +216,9 @@
   </worldbody>
   <actuator>
     <!-- Drive wheels & lift -->
-    <motor name="wheel_left_act" joint="wheel_left_joint" gear="1" ctrllimited="true" ctrlrange="-16 16" />
-    <motor name="wheel_right_act" joint="wheel_right_joint" gear="1" ctrllimited="true" ctrlrange="-16 16" />
-    <motor name="lift_act" joint="lift_joint" gear="1" ctrllimited="true" ctrlrange="-1000 1000" />
+    <intvelocity name="wheel_left_act" joint="wheel_left_joint" gear="1" kp="10" kv="1" ctrllimited="true" ctrlrange="-10 10" forcelimited="true" forcerange="-10 10"/>
+    <intvelocity name="wheel_right_act" joint="wheel_right_joint" gear="1" kp="10" kv="1" ctrllimited="true" ctrlrange="-10 10" forcelimited="true" forcerange="-10 10"/>
+    <intvelocity name="lift_act" joint="lift_joint" kp="20000" dampratio="1" ctrllimited="true" ctrlrange="-0.1 0.1" actrange="0 0.447677" forcelimited="true" forcerange="-200 200"/>
 
     <!-- Left arm -->
     <position name="left_shoulder_pan_act" joint="left_shoulder_pan" kp="50" dampratio="1" forcerange="-2.94 2.94"/>

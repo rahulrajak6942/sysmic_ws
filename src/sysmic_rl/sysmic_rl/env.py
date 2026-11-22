@@ -97,8 +97,8 @@ class SysmicV2Env(gym.Env):
             joint_id = self.model.actuator_trnid[actuator_id, 0]
             if joint_id >= 0:
                 joint_to_actuator[joint_id] = actuator_id
-
         self.lift_actuator_id = int(joint_to_actuator[self.lift_joint_id])
+        self.lift_act_adr = int(self.model.actuator_actadr[self.lift_actuator_id])
         self.arm_actuator_ids = np.array(
             [joint_to_actuator[self.model.joint(j).id] for j in self.arm_joints],
             dtype=int,
@@ -106,9 +106,14 @@ class SysmicV2Env(gym.Env):
 
         self.lift_min = float(self.model.jnt_range[self.lift_joint_id, 0])
         self.lift_max = float(self.model.jnt_range[self.lift_joint_id, 1])
-        self.lift_ctrl_min, self.lift_ctrl_max = self.model.actuator_ctrlrange[
-            self.lift_actuator_id
-        ]
+        if self.model.actuator_ctrllimited[self.lift_actuator_id]:
+            ctrl_min, ctrl_max = self.model.actuator_ctrlrange[self.lift_actuator_id]
+            self.lift_vel_min = float(ctrl_min)
+            self.lift_vel_max = float(ctrl_max)
+        else:
+            self.lift_vel_min = -0.1
+            self.lift_vel_max = 0.1
+        self.lift_max_vel = float(min(abs(self.lift_vel_min), abs(self.lift_vel_max)))
         self.arm_min_limits = np.array(
             [self.model.jnt_range[self.model.joint(j).id, 0] for j in self.arm_joints],
             dtype=np.float32,
@@ -122,16 +127,9 @@ class SysmicV2Env(gym.Env):
         self.arm_action_scale = 0.02    # rad per step (~1.0 rad/s max)
         self.lift_action_scale = 0.005  # m per step (~0.25 m/s max)
         self.action_ema_alpha = 0.25    # Lower = smoother, higher = snappier
-
-        # Software PD gains for motor-driven lift (~17.1 kg total, passive damping=50)
-        self.lift_kp = 1500.0
-        self.lift_kd = 270.0
-
-        # Anti-windup bounds between commanded setpoint and actual joint state
-        self.lift_max_lag = 0.03  # m
         self.arm_max_lag = 0.15   # rad
 
-        self.lift_target_qpos = 0.0
+        self.lift_vel_cmd = 0.0
         self.arm_target_qpos = np.zeros(12, dtype=np.float32)
         self.smoothed_action = np.zeros(13, dtype=np.float32)
 
@@ -276,16 +274,17 @@ class SysmicV2Env(gym.Env):
         mujoco.mj_forward(self.model, self.data)
 
         self.step_count = 0
-        self.lift_target_qpos = float(self.data.qpos[self.lift_qpos_id])
+        self.lift_vel_cmd = 0.0
         self.arm_target_qpos = self.data.qpos[self.arm_qpos_ids].astype(np.float32).copy()
         self.smoothed_action = np.zeros(13, dtype=np.float32)
 
-        self.data.ctrl[self.lift_actuator_id] = np.clip(
-            self.data.qfrc_bias[self.lift_dof_id],
-            self.lift_ctrl_min,
-            self.lift_ctrl_max,
+        self.data.act[self.lift_act_adr] = float(
+            np.clip(self.data.qpos[self.lift_qpos_id], self.lift_min, self.lift_max)
         )
+        self.data.ctrl[self.lift_actuator_id] = 0.0
         self.data.ctrl[self.arm_actuator_ids] = self.arm_target_qpos
+
+        mujoco.mj_forward(self.model, self.data)
 
         if any(
             x is not None
@@ -325,20 +324,19 @@ class SysmicV2Env(gym.Env):
             + (1.0 - self.action_ema_alpha) * prev_smoothed
         )
 
-        # 2. Update setpoints with anti-windup bounds around current joint state
-        prev_lift_target = self.lift_target_qpos
-        prev_arm_target = self.arm_target_qpos.copy()
-
-        current_lift_qpos = float(self.data.qpos[self.lift_qpos_id])
-        current_arm_qpos = self.data.qpos[self.arm_qpos_ids]
-
-        next_lift = prev_lift_target + float(self.smoothed_action[0]) * self.lift_action_scale
-        next_lift = np.clip(
-            next_lift,
-            current_lift_qpos - self.lift_max_lag,
-            current_lift_qpos + self.lift_max_lag,
+        # 2. Compute lift velocity command bounded to velocity limits
+        prev_lift_vel_cmd = self.lift_vel_cmd
+        self.lift_vel_cmd = float(
+            np.clip(
+                self.smoothed_action[0] * self.lift_max_vel,
+                self.lift_vel_min,
+                self.lift_vel_max,
+            )
         )
-        self.lift_target_qpos = float(np.clip(next_lift, self.lift_min, self.lift_max))
+
+        # 3. Update arm position targets with anti-windup bounds
+        prev_arm_target = self.arm_target_qpos.copy()
+        current_arm_qpos = self.data.qpos[self.arm_qpos_ids]
 
         next_arm = prev_arm_target + self.smoothed_action[1:] * self.arm_action_scale
         next_arm = np.clip(
@@ -350,21 +348,15 @@ class SysmicV2Env(gym.Env):
             next_arm, self.arm_min_limits, self.arm_max_limits
         ).astype(np.float32)
 
-        # 3. Substep interpolation + software PD/gravity-comp lift control
+        # 4. Substep interpolation for smooth arm positions and lift velocity ramps
         for sub in range(self.frame_skip):
             alpha = (sub + 1) / self.frame_skip
-            interp_lift = (1.0 - alpha) * prev_lift_target + alpha * self.lift_target_qpos
-            interp_arm = (1.0 - alpha) * prev_arm_target + alpha * self.arm_target_qpos
-
-            lift_err = interp_lift - self.data.qpos[self.lift_qpos_id]
-            lift_vel = self.data.qvel[self.lift_dof_id]
-            lift_bias = self.data.qfrc_bias[self.lift_dof_id]
-            lift_force = lift_bias + self.lift_kp * lift_err - self.lift_kd * lift_vel
-            self.data.ctrl[self.lift_actuator_id] = np.clip(
-                lift_force, self.lift_ctrl_min, self.lift_ctrl_max
+            self.data.ctrl[self.lift_actuator_id] = (
+                (1.0 - alpha) * prev_lift_vel_cmd + alpha * self.lift_vel_cmd
             )
-            self.data.ctrl[self.arm_actuator_ids] = interp_arm
-
+            self.data.ctrl[self.arm_actuator_ids] = (
+                (1.0 - alpha) * prev_arm_target + alpha * self.arm_target_qpos
+            )
             mujoco.mj_step(self.model, self.data)
 
         obs = self._get_obs()
@@ -414,7 +406,7 @@ class SysmicV2Env(gym.Env):
             and (right_error_quat < 0.01)
             and (right_error_gripper < 0.01)
         )
-        reward_success = 100.0 if success else 0.0
+        reward_success = 1000.0 if success else 0.0
 
         reward = (
             reward_pos +
