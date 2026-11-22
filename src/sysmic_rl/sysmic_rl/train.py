@@ -24,33 +24,52 @@ def main():
     time_steps = 2_000_000
 
     env = SubprocVecEnv([make_env(mjcf_file=mjcf_file) for _ in range(8)])
+    model_path = os.path.join(
+        get_package_share_directory('sysmic_rl'),
+        'models',
+        f'sysmic_v2_{model_type}.zip'
+    )
 
     if model_type == 'PPO':
         # ---------------------------------------------------------
         # Option A: Train with PPO (Proximal Policy Optimization)
         # ---------------------------------------------------------
-        if (torch.cuda.is_available()):
-            model = PPO(
-                'MlpPolicy',
-                env,
-                verbose=1,
-                learning_rate=3e-4,
-                n_steps=2048,
-                batch_size=64,
-                tensorboard_log=f'log/{model_type}',
-                device='cuda'
-            )
+        if os.path.exists(model_path):
+            if (torch.cuda.is_available()):
+                model = PPO.load(
+                    model_path,
+                    env=env,
+                    device='cuda'
+                )
+            else:
+                model = PPO.load(
+                    model_path,
+                    env=env,
+                    device='cpu'
+                )
         else:
-            model = PPO(
-                'MlpPolicy',
-                env,
-                verbose=1,
-                learning_rate=3e-4,
-                n_steps=2048,
-                batch_size=64,
-                tensorboard_log=f'log/{model_type}',
-                device='cpu'
-            )
+            if (torch.cuda.is_available()):
+                model = PPO(
+                    'MlpPolicy',
+                    env,
+                    verbose=1,
+                    learning_rate=3e-4,
+                    n_steps=2048,
+                    batch_size=64,
+                    tensorboard_log=f'log/{model_type}',
+                    device='cuda'
+                )
+            else:
+                model = PPO(
+                    'MlpPolicy',
+                    env,
+                    verbose=1,
+                    learning_rate=3e-4,
+                    n_steps=2048,
+                    batch_size=64,
+                    tensorboard_log=f'log/{model_type}',
+                    device='cpu'
+                )
 
         checkpoint_callback = CheckpointCallback(
             save_freq=80_000,
@@ -61,30 +80,44 @@ def main():
         # ---------------------------------------------------------
         # Option B: Train with SAC (Soft Actor-Critic)
         # ---------------------------------------------------------
-        if (torch.cuda.is_available()):
-            model = SAC(
-                'MlpPolicy',
-                env,
-                verbose=1,
-                learning_rate=3e-4,
-                buffer_size=800_000,
-                learning_starts=8000,
-                batch_size=256,
-                tensorboard_log=f'log/{model_type}',
-                device='cuda'
-            )
+        if os.path.exists(model_path):
+            if (torch.cuda.is_available()):
+                model = PPO.load(
+                    model_path,
+                    env=env,
+                    device='cuda'
+                )
+            else:
+                model = PPO.load(
+                    model_path,
+                    env=env,
+                    device='cpu'
+                )
         else:
-            model = SAC(
-                'MlpPolicy',
-                env,
-                verbose=1,
-                learning_rate=3e-4,
-                buffer_size=800_000,
-                learning_starts=8000,
-                batch_size=256,
-                tensorboard_log=f'log/{model_type}',
-                device='cpu'
-            )
+            if (torch.cuda.is_available()):
+                model = SAC(
+                    'MlpPolicy',
+                    env,
+                    verbose=1,
+                    learning_rate=3e-4,
+                    buffer_size=800_000,
+                    learning_starts=8000,
+                    batch_size=256,
+                    tensorboard_log=f'log/{model_type}',
+                    device='cuda'
+                )
+            else:
+                model = SAC(
+                    'MlpPolicy',
+                    env,
+                    verbose=1,
+                    learning_rate=3e-4,
+                    buffer_size=800_000,
+                    learning_starts=8000,
+                    batch_size=256,
+                    tensorboard_log=f'log/{model_type}',
+                    device='cpu'
+                )
 
         checkpoint_callback = CheckpointCallback(
             save_freq=10_000,
@@ -96,7 +129,14 @@ def main():
         callback=checkpoint_callback,
         progress_bar=True
     )
-    model.save(f'sysmic_v2_{model_type}')
+    model.save(os.path.abspath(
+        get_package_share_directory('sysmic_rl'),
+        '..', '..', '..',
+        'src',
+        'sysmic_rl',
+        'models',
+        f'sysmic_v2_{model_type}')
+    )
     print(f'sysmic_v2_{model_type} model saved.')
 
 if __name__ == '__main__':

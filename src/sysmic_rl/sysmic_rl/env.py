@@ -7,26 +7,36 @@ import numpy as np
 class SysmicV2Env(gym.Env):
     metadata = {'render_modes': ['human'], 'render_fps': 50}
 
-    def __init__(self, mjcf_file, render_mode=None):
+    def __init__(self, mjcf_file, render_mode=None, max_episode_steps=500):
         super().__init__()
 
         self.model = mujoco.MjModel.from_xml_path(mjcf_file)
         self.data = mujoco.MjData(self.model)
+
+        self.frame_skip = 10
         self.render_mode = render_mode
+        self.max_episode_steps = max_episode_steps
+        self.step_count = 0
 
-        # Action Space: 12 dimensions
-        # 6 continuous values for 5 left arm joints + left gripper
-        # 6 continuous values for 5 right arm joints + right gripper
-        self.action_space = gym.spaces.Box(low=-1.0, high=1.0, shape=(12,), dtype=np.float32)
+        # Action Space: 13 dimensions
+        # - Lift control mechanism (6 dims): effort
+        # - Left arm joints (6 dims): position
+        # - Right arm joints (6 dims): position
+        self.action_space = gym.spaces.Box(low=-1.0, high=1.0, shape=(13,), dtype=np.float32)
 
-        # Observation Space: 42 dimensions
-        # - Current State for left arm (13 dims): 6 joint pos, 3 EE pos, 4 EE quat
-        # - Current State for right arm (13 dims): 6 joint pos, 3 EE pos, 4 EE quat
-        # - Goal State (8 dims for left arm): 3 EE pos, 4 EE quat, 1 gripper state
-        # - Goal State (8 dims for right arm): 3 EE pos, 4 EE quat, 1 gripper state
-        self.observation_space = gym.spaces.Box(low=-np.inf, high=np.inf, shape=(42,), dtype=np.float32)
+        # Observation Space: 69 dimensions
+        # - Current State for lift control mechanism (1 dim)
+        # - Current State for left arm (13 dims): 6 joints, 3 EEF pos, 4 EE quat
+        # - Current State for right arm (13 dims): 6 joints, 3 EEF pos, 4 EE quat
+        # - Current Velocity for lift control mechanism (1 dim)
+        # - Current Velocity for left arm (6 dims)
+        # - Current Velocity for right arm (6 dims)
+        # - Previous Action (13 dims)
+        # - Goal State for left arm (8 dims): 3 EE pos, 4 EE quat, 1 gripper state
+        # - Goal State for right arm (8 dims): 3 EE pos, 4 EE quat, 1 gripper state
+        self.observation_space = gym.spaces.Box(low=-np.inf, high=np.inf, shape=(69,), dtype=np.float32)
 
-        total_links = [
+        arm_links = [
             'left_link0',
             'left_link1',
             'left_link2',
@@ -44,10 +54,13 @@ class SysmicV2Env(gym.Env):
         ]
         self.arm_body_ids = {
             self.model.body(name).id
-            for name in total_links
+            for name in arm_links
             if self.model.body(name).id >= 0
         }
-        
+
+        self.lift_joint_id = self.model.joint('lift_joint').id
+        self.lift_qpos_id = int(self.model.joint('lift_joint').qposadr[0])
+        self.lift_dof_id = int(self.model.joint('lift_joint').dofadr[0])
         self.left_arm_joints = [
             'left_shoulder_pan',
             'left_shoulder_lift',
@@ -64,25 +77,64 @@ class SysmicV2Env(gym.Env):
             'right_wrist_roll',
             'right_gripper',
         ]
-        self.total_joints = self.left_arm_joints + self.right_arm_joints
+        self.arm_joints = self.left_arm_joints + self.right_arm_joints
+        self.arm_qpos_ids = np.array(
+            [self.model.joint(j).qposadr[0] for j in self.arm_joints],
+            dtype=int
+        )
+        self.arm_dof_ids = np.array(
+            [self.model.joint(j).dofadr[0] for j in self.arm_joints],
+            dtype=int
+        )
 
-        self.joint_indices = [self.model.joint(jname).qposadr[0] for jname in self.total_joints]
+        self.base_link_id = self.model.body('base_link').id
+        self.lift_carriage_id = self.model.body('lift_carriage_link').id
+        self.left_jaw_id = self.model.body('left_jaw').id
+        self.right_jaw_id = self.model.body('right_jaw').id
 
         joint_to_actuator = {}
         for actuator_id in range(self.model.nu):
             joint_id = self.model.actuator_trnid[actuator_id, 0]
             if joint_id >= 0:
                 joint_to_actuator[joint_id] = actuator_id
-        self.actuator_ids = []
-        for jnt in self.total_joints:
-            joint_id = self.model.joint(jnt).id
-            self.actuator_ids.append(joint_to_actuator[joint_id])
-        self.actuator_ids = np.array(self.actuator_ids, dtype=int)
 
-        self.min_limits = [self.model.jnt_range[self.model.joint(jname).id, 0]  for jname in self.total_joints]
-        self.max_limits = [self.model.jnt_range[self.model.joint(jname).id, 1]  for jname in self.total_joints]
+        self.lift_actuator_id = int(joint_to_actuator[self.lift_joint_id])
+        self.arm_actuator_ids = np.array(
+            [joint_to_actuator[self.model.joint(j).id] for j in self.arm_joints],
+            dtype=int,
+        )
 
-        self.frame_skip = 50
+        self.lift_min = float(self.model.jnt_range[self.lift_joint_id, 0])
+        self.lift_max = float(self.model.jnt_range[self.lift_joint_id, 1])
+        self.lift_ctrl_min, self.lift_ctrl_max = self.model.actuator_ctrlrange[
+            self.lift_actuator_id
+        ]
+        self.arm_min_limits = np.array(
+            [self.model.jnt_range[self.model.joint(j).id, 0] for j in self.arm_joints],
+            dtype=np.float32,
+        )
+        self.arm_max_limits = np.array(
+            [self.model.jnt_range[self.model.joint(j).id, 1] for j in self.arm_joints],
+            dtype=np.float32,
+        )
+
+        # Control & smoothness parameters (50 Hz policy at default dt=0.002s)
+        self.arm_action_scale = 0.02    # rad per step (~1.0 rad/s max)
+        self.lift_action_scale = 0.005  # m per step (~0.25 m/s max)
+        self.action_ema_alpha = 0.25    # Lower = smoother, higher = snappier
+
+        # Software PD gains for motor-driven lift (~17.1 kg total, passive damping=50)
+        self.lift_kp = 1500.0
+        self.lift_kd = 270.0
+
+        # Anti-windup bounds between commanded setpoint and actual joint state
+        self.lift_max_lag = 0.03  # m
+        self.arm_max_lag = 0.15   # rad
+
+        self.lift_target_qpos = 0.0
+        self.arm_target_qpos = np.zeros(12, dtype=np.float32)
+        self.smoothed_action = np.zeros(13, dtype=np.float32)
+
         self.left_target_pos = np.zeros(3, dtype=np.float32)
         self.left_target_quat = np.array([1.0, 0.0, 0.0, 0.0], dtype=np.float32)
         self.left_target_gripper = 0.0
@@ -111,19 +163,28 @@ class SysmicV2Env(gym.Env):
         return collisions
 
     def _get_obs(self):
-        left_arm_qpos = self.data.qpos[self.joint_indices[:6]]
-        left_ee_pos = self.data.body('left_jaw').xpos.copy()
-        left_ee_quat = self.data.body('left_jaw').xquat.copy()
-        right_arm_qpos = self.data.qpos[self.joint_indices[6:]]
-        right_ee_pos = self.data.body('right_jaw').xpos.copy()
-        right_ee_quat = self.data.body('right_jaw').xquat.copy()
+        lift_qpos = np.array([self.data.qpos[self.lift_qpos_id]], dtype=np.float32)
+        left_arm_qpos = self.data.qpos[self.arm_qpos_ids[:6]]
+        left_ee_pos = self.data.xpos[self.left_jaw_id]
+        left_ee_quat = self.data.xquat[self.left_jaw_id]
+        right_arm_qpos = self.data.qpos[self.arm_qpos_ids[6:]]
+        right_ee_pos = self.data.xpos[self.right_jaw_id]
+        right_ee_quat = self.data.xquat[self.right_jaw_id]
+
+        lift_qvel = np.array([self.data.qvel[self.lift_dof_id]], dtype=np.float32)
+        arm_qvel = self.data.qvel[self.arm_dof_ids]
+
         current_state = np.concatenate([
+            lift_qpos,
             left_arm_qpos,
             left_ee_pos,
             left_ee_quat,
             right_arm_qpos,
             right_ee_pos,
-            right_ee_quat
+            right_ee_quat,
+            lift_qvel,
+            arm_qvel,
+            self.smoothed_action,
         ])
 
         target_state = np.concatenate([
@@ -132,44 +193,41 @@ class SysmicV2Env(gym.Env):
             np.array([self.left_target_gripper], dtype=np.float32),
             self.right_target_pos,
             self.right_target_quat,
-            np.array([self.right_target_gripper], dtype=np.float32)
+            np.array([self.right_target_gripper], dtype=np.float32),
         ])
 
         return np.concatenate([current_state, target_state]).astype(np.float32)
 
     def _sample_target(self):
-        anchor = self.data.body('lift_carriage_link').xpos.copy()
+        base_pos = self.data.xpos[self.base_link_id]
+        carriage_x = base_pos[0] - 0.117
+        carriage_z_zero = base_pos[2] + 0.64
+        virtual_lift_z = carriage_z_zero + np.random.uniform(self.lift_min, self.lift_max)
 
         self.left_target_pos = np.array(
             [
-                anchor[0] + np.random.uniform(0.15, 0.35),
-                np.random.uniform(0.02, 0.25),
-                anchor[2] + np.random.uniform(-0.15, 0.20),
+                carriage_x + np.random.uniform(0.15, 0.35),
+                base_pos[1] + np.random.uniform(0.02, 0.25),
+                virtual_lift_z + np.random.uniform(-0.12, 0.15),
             ],
             dtype=np.float32,
         )
         self.left_target_quat = self._random_quat_wxyz()
         self.left_target_gripper = float(
-            np.random.uniform(
-                self.min_limits[5],
-                self.max_limits[5],
-            )
+            np.random.uniform(self.arm_min_limits[5], self.arm_max_limits[5])
         )
 
         self.right_target_pos = np.array(
             [
-                anchor[0] + np.random.uniform(0.15, 0.35),
-                np.random.uniform(-0.25, -0.02),
-                anchor[2] + np.random.uniform(-0.15, 0.20),
+                carriage_x + np.random.uniform(0.15, 0.35),
+                base_pos[1] + np.random.uniform(-0.25, -0.02),
+                virtual_lift_z + np.random.uniform(-0.12, 0.15),
             ],
             dtype=np.float32,
         )
         self.right_target_quat = self._random_quat_wxyz()
         self.right_target_gripper = float(
-            np.random.uniform(
-                self.min_limits[11],
-                self.max_limits[11],
-            )
+            np.random.uniform(self.arm_min_limits[11], self.arm_max_limits[11])
         )
 
     def _set_target(
@@ -207,48 +265,106 @@ class SysmicV2Env(gym.Env):
 
         if reposition:
             mujoco.mj_resetData(self.model, self.data)
-            init_qpos = np.random.uniform(-0.2, 0.2, size=len(self.joint_indices))
-            self.data.qpos[self.joint_indices] = np.clip(init_qpos, self.min_limits, self.max_limits)
+            init_arm_qpos = np.random.uniform(-0.2, 0.2, size=len(self.arm_qpos_ids))
+            self.data.qpos[self.lift_qpos_id] = np.random.uniform(
+                self.lift_min, self.lift_max
+            )
+            self.data.qpos[self.arm_qpos_ids] = np.clip(
+                init_arm_qpos, self.arm_min_limits, self.arm_max_limits
+            )
 
-        if left_target_pos is not None or left_target_quat is not None or left_target_gripper is not None or right_target_pos is not None or right_target_quat is not None or right_target_gripper is not None:
+        mujoco.mj_forward(self.model, self.data)
+
+        self.step_count = 0
+        self.lift_target_qpos = float(self.data.qpos[self.lift_qpos_id])
+        self.arm_target_qpos = self.data.qpos[self.arm_qpos_ids].astype(np.float32).copy()
+        self.smoothed_action = np.zeros(13, dtype=np.float32)
+
+        self.data.ctrl[self.lift_actuator_id] = np.clip(
+            self.data.qfrc_bias[self.lift_dof_id],
+            self.lift_ctrl_min,
+            self.lift_ctrl_max,
+        )
+        self.data.ctrl[self.arm_actuator_ids] = self.arm_target_qpos
+
+        if any(
+            x is not None
+            for x in (
+                left_target_pos, left_target_quat, left_target_gripper,
+                right_target_pos, right_target_quat, right_target_gripper,
+            )
+        ):
             self._set_target(
-                left_target_pos,
-                left_target_quat,
-                left_target_gripper,
-                right_target_pos,
-                right_target_quat,
-                right_target_gripper
+                left_target_pos, left_target_quat, left_target_gripper,
+                right_target_pos, right_target_quat, right_target_gripper,
             )
         else:
             self._sample_target()
 
         try:
-            left_target_mocap_id = self.model.body('left_target').mocapid[0]
-            self.data.mocap_pos[left_target_mocap_id] = self.left_target_pos
-            self.data.mocap_quat[left_target_mocap_id] = self.left_target_quat
-            right_target_mocap_id = self.model.body('right_target').mocapid[0]
-            self.data.mocap_pos[right_target_mocap_id] = self.right_target_pos
-            self.data.mocap_quat[right_target_mocap_id] = self.right_target_quat
+            left_mocap_id = self.model.body('left_target').mocapid[0]
+            self.data.mocap_pos[left_mocap_id] = self.left_target_pos
+            self.data.mocap_quat[left_mocap_id] = self.left_target_quat
+            right_mocap_id = self.model.body('right_target').mocapid[0]
+            self.data.mocap_pos[right_mocap_id] = self.right_target_pos
+            self.data.mocap_quat[right_mocap_id] = self.right_target_quat
         except Exception:
             pass
 
         mujoco.mj_forward(self.model, self.data)
-
-        obs = self._get_obs()
-        info = {}
-        return obs, info
+        return self._get_obs(), {}
 
     def step(self, action):
-        scaled_action = np.clip(action, -1.0, 1.0) * 0.01
-        current_qpos = np.concatenate([
-            self.data.qpos[self.joint_indices[:6]],
-            self.data.qpos[self.joint_indices[6:]]
-        ])
-        target_qpos = current_qpos + scaled_action
+        self.step_count += 1
+        raw_action = np.clip(np.asarray(action, dtype=np.float32), -1.0, 1.0)
 
-        self.data.ctrl[self.actuator_ids] = np.clip(target_qpos, self.min_limits, self.max_limits)
+        # 1. Low-pass filter (EMA) to eliminate high-frequency jitter
+        prev_smoothed = self.smoothed_action.copy()
+        self.smoothed_action = (
+            self.action_ema_alpha * raw_action
+            + (1.0 - self.action_ema_alpha) * prev_smoothed
+        )
 
-        for _ in range(self.frame_skip):
+        # 2. Update setpoints with anti-windup bounds around current joint state
+        prev_lift_target = self.lift_target_qpos
+        prev_arm_target = self.arm_target_qpos.copy()
+
+        current_lift_qpos = float(self.data.qpos[self.lift_qpos_id])
+        current_arm_qpos = self.data.qpos[self.arm_qpos_ids]
+
+        next_lift = prev_lift_target + float(self.smoothed_action[0]) * self.lift_action_scale
+        next_lift = np.clip(
+            next_lift,
+            current_lift_qpos - self.lift_max_lag,
+            current_lift_qpos + self.lift_max_lag,
+        )
+        self.lift_target_qpos = float(np.clip(next_lift, self.lift_min, self.lift_max))
+
+        next_arm = prev_arm_target + self.smoothed_action[1:] * self.arm_action_scale
+        next_arm = np.clip(
+            next_arm,
+            current_arm_qpos - self.arm_max_lag,
+            current_arm_qpos + self.arm_max_lag,
+        )
+        self.arm_target_qpos = np.clip(
+            next_arm, self.arm_min_limits, self.arm_max_limits
+        ).astype(np.float32)
+
+        # 3. Substep interpolation + software PD/gravity-comp lift control
+        for sub in range(self.frame_skip):
+            alpha = (sub + 1) / self.frame_skip
+            interp_lift = (1.0 - alpha) * prev_lift_target + alpha * self.lift_target_qpos
+            interp_arm = (1.0 - alpha) * prev_arm_target + alpha * self.arm_target_qpos
+
+            lift_err = interp_lift - self.data.qpos[self.lift_qpos_id]
+            lift_vel = self.data.qvel[self.lift_dof_id]
+            lift_bias = self.data.qfrc_bias[self.lift_dof_id]
+            lift_force = lift_bias + self.lift_kp * lift_err - self.lift_kd * lift_vel
+            self.data.ctrl[self.lift_actuator_id] = np.clip(
+                lift_force, self.lift_ctrl_min, self.lift_ctrl_max
+            )
+            self.data.ctrl[self.arm_actuator_ids] = interp_arm
+
             mujoco.mj_step(self.model, self.data)
 
         obs = self._get_obs()
@@ -256,42 +372,65 @@ class SysmicV2Env(gym.Env):
         # ----------------------------------------------------
         # REWARD FUNCTION
         # ----------------------------------------------------
-        left_ee_pos = self.data.body('left_jaw').xpos
-        left_ee_quat = self.data.body('left_jaw').xquat
-        left_current_gripper = self.data.qpos[self.model.joint('left_gripper').qposadr[0]]
+        left_ee_pos = self.data.xpos[self.left_jaw_id]
+        left_ee_quat = self.data.xquat[self.left_jaw_id]
+        left_current_gripper = self.data.qpos[self.arm_qpos_ids[5]]
 
-        right_ee_pos = self.data.body('right_jaw').xpos
-        right_ee_quat = self.data.body('right_jaw').xquat
-        right_current_gripper = self.data.qpos[self.model.joint('right_gripper').qposadr[0]]
+        right_ee_pos = self.data.xpos[self.right_jaw_id]
+        right_ee_quat = self.data.xquat[self.right_jaw_id]
+        right_current_gripper = self.data.qpos[self.arm_qpos_ids[11]]
 
-        left_error_pos = np.linalg.norm(left_ee_pos - self.left_target_pos)
-        right_error_pos = np.linalg.norm(right_ee_pos - self.right_target_pos)
+        left_error_pos = float(np.linalg.norm(left_ee_pos - self.left_target_pos))
+        right_error_pos = float(np.linalg.norm(right_ee_pos - self.right_target_pos))
 
         left_quat_dot = np.abs(np.dot(left_ee_quat, self.left_target_quat))
-        left_error_quat = 1.0 - np.clip(left_quat_dot, 0.0, 1.0)
+        left_error_quat = float(1.0 - np.clip(left_quat_dot, 0.0, 1.0))
         right_quat_dot = np.abs(np.dot(right_ee_quat, self.right_target_quat))
-        right_error_quat = 1.0 - np.clip(right_quat_dot, 0.0, 1.0)
+        right_error_quat = float(1.0 - np.clip(right_quat_dot, 0.0, 1.0))
 
-        left_error_gripper = np.abs(left_current_gripper - self.left_target_gripper)
-        right_error_gripper = np.abs(right_current_gripper - self.right_target_gripper)
+        left_error_gripper = float(np.abs(left_current_gripper - self.left_target_gripper))
+        right_error_gripper = float(np.abs(right_current_gripper - self.right_target_gripper))
 
         collisions = self._get_arm_collisions()
         penetration = sum(max(0.0, -dist) for _, _, dist in collisions)
 
-        reward_pos = -2.0 * left_error_pos + -2.0 * right_error_pos
-        reward_quat = -4.0 * left_error_quat + -4.0 * right_error_quat
-        reward_gripper = -1.0 * left_error_gripper + -1.0 * right_error_gripper
+        action_delta = raw_action - prev_smoothed
+        reward_action_rate = -0.05 * float(np.sum(action_delta ** 2))
+        all_qvel = np.append(
+            self.data.qvel[self.arm_dof_ids], self.data.qvel[self.lift_dof_id]
+        )
+        reward_vel = -0.005 * float(np.sum(all_qvel ** 2))
+
+        reward_pos = -2.0 * (left_error_pos + right_error_pos)
+        reward_quat = -4.0 * (left_error_quat + right_error_quat)
+        reward_gripper = -1.0 * (left_error_gripper + right_error_gripper)
         reward_collision = -10.0 * len(collisions) - 100.0 * penetration
 
-        success = (left_error_pos < 0.01) and (left_error_quat < 0.01) and (left_error_gripper < 0.01) and (right_error_pos < 0.01) and (right_error_quat < 0.01) and (right_error_gripper < 0.01)
+        success = (
+            (left_error_pos < 0.01)
+            and (left_error_quat < 0.01)
+            and (left_error_gripper < 0.01)
+            and (right_error_pos < 0.01)
+            and (right_error_quat < 0.01)
+            and (right_error_gripper < 0.01)
+        )
         reward_success = 100.0 if success else 0.0
-        reward = reward_pos + reward_quat + reward_gripper + reward_collision + reward_success
+
+        reward = (
+            reward_pos +
+            reward_quat +
+            reward_gripper +
+            reward_collision +
+            reward_action_rate +
+            reward_vel +
+            reward_success
+        )
 
         # ----------------------------------------------------
         # TERMINATION CONDITIONS
         # ----------------------------------------------------
         terminated = bool(success)
-        truncated = False
+        truncated = self.step_count >= self.max_episode_steps
 
         return obs, reward, terminated, truncated, {
             'success': success,

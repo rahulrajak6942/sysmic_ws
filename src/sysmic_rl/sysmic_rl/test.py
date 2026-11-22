@@ -12,12 +12,16 @@ def test(mjcf_file, model_type, episodes):
     env = SysmicV2Env(mjcf_file=mjcf_file)
     env = TimeLimit(env, max_episode_steps=300)
 
-    model_file = f'sysmic_v2_{model_type}.zip'
-    print(f'Loading {model_type} model from {model_file}...')
+    model_path = os.path.join(
+        get_package_share_directory('sysmic_rl'),
+        'models',
+        f'sysmic_v2_{model_type}.zip'
+    )
+    print(f'Loading {model_type} model from {model_path}...')
     if model_type == 'PPO':
-        model = PPO.load(model_file)
+        model = PPO.load(model_path)
     elif model_type == 'SAC':
-        model = SAC.load(model_file)
+        model = SAC.load(model_path)
     else:
         raise ValueError('Unsupported model type.')
 
@@ -44,11 +48,16 @@ def test(mjcf_file, model_type, episodes):
                 viewer.sync()
                 time.sleep(0.02)
 
-            print(f'Success: {info.get('success', False)}')
+            print(f'Success: {info.get("success", False)}')
             print(f'Reward: {episode_reward:.2f}')
-            print(f'Position Error: {info.get('error_position', 0.0)}')
-            print(f'Orientation Error: {info.get('error_orientation', 0.0)}')
-            print(f'Gripper Error: {info.get('error_gripper', 0.0)}')
+            print(f'Left Position Error: {info.get("left_error_position", 0.0)}')
+            print(f'Left Orientation Error: {info.get("left_error_orientation", 0.0)}')
+            print(f'Left Gripper Error: {info.get("left_error_gripper", 0.0)}')
+            print(f'Right Position Error: {info.get("right_error_position", 0.0)}')
+            print(f'Right Orientation Error: {info.get("right_error_orientation", 0.0)}')
+            print(f'Right Gripper Error: {info.get("right_error_gripper", 0.0)}')
+            print(f'Collisions: {info.get("collisions", 0.0)}')
+            print(f'Penetration: {info.get("penetration", 0.0)}')
 
     env.close()
 
