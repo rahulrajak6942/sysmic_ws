@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 from ament_index_python import get_package_share_directory
-from gymnasium.wrappers import TimeLimit
 import mujoco.viewer
 import os
 from stable_baselines3 import PPO, SAC
@@ -10,7 +9,6 @@ import time
 
 def test(mjcf_file, model_type, episodes):
     env = SysmicV2Env(mjcf_file=mjcf_file)
-    env = TimeLimit(env, max_episode_steps=300)
 
     model_path = os.path.join(
         get_package_share_directory('sysmic_rl'),

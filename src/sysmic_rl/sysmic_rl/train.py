@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 from ament_index_python import get_package_share_directory
-from gymnasium.wrappers import TimeLimit
 import os
 from stable_baselines3 import PPO, SAC
 from stable_baselines3.common.callbacks import CheckpointCallback
@@ -13,7 +12,6 @@ import torch
 def make_env(mjcf_file: str):
     def initialize_env():
         env = SysmicV2Env(mjcf_file=mjcf_file)
-        env = TimeLimit(env, max_episode_steps=300)
         env = Monitor(env)
         return env
     return initialize_env
