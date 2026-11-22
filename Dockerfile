@@ -11,6 +11,7 @@ ENV QT_X11_NO_MITSHM=1
 
 COPY ./fastdds.xml /fastdds.xml
 RUN uv venv --system-site-packages /sysmic_ws/.venv
+ENV PYTHONPATH="/sysmic_ws/.venv/lib/python3.10/site-packages"
 
 WORKDIR /sysmic_ws
 
