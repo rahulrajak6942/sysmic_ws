@@ -17,7 +17,7 @@ sysmic_v2_robocasa/
 | File in `assets/` | What it is |
 |---|---|
 | `robot.xml`, `base.xml`, `left_gripper.xml`, `right_gripper.xml`, `controller.json` | the robosuite / RoboCasa robot; `sysmic_robocasa.py` loads these |
-| `sysmic_v2_scene.xml` | physical MuJoCo model on an empty floor (15 motors, real wheels, casters, suspension); opens in plain MuJoCo: `python -m mujoco.viewer --mjcf=assets/sysmic_v2_scene.xml` |
+| `sysmic_v2_scene.xml` | physical MuJoCo model on an empty floor (15 motors, real wheels, casters, suspension); opens in plain MuJoCo: `python -m mujoco.viewer --mjcf=assets/sysmic_v2_scene.xml`. Control tab: `lift` (m), arm and gripper joints (rad), `wheel_left` / `wheel_right` (rad/s, positive = forward on both) |
 | `sysmic_v2.xml` | plain URDF to MJCF conversion, without motors or floor |
 | `meshes/` | every mesh the files above use (arm meshes reduced to 60k triangles for MuJoCo) |
 

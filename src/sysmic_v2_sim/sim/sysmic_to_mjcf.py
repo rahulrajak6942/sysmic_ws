@@ -20,6 +20,7 @@ before conversion (see sim_urdf()):
     (radius 0.085 m, axle at 0.081 m) reach 4 mm below the casters; on the real
     robot that is spring preload. Without the spring the base would rock.
 """
+import math
 import os
 import struct
 import xml.etree.ElementTree as ET
@@ -32,6 +33,9 @@ from sysmic_paths import DESCRIPTION, GENERATED, ROBOT_XML, SCENE_XML, URDF
 
 _MARKER = os.path.join(GENERATED, "built_from.txt")
 
+LIFT_FORCE = 2000       # N, lift motor limit (placeholder; the load alone is 368 N)
+ARM_KP, ARM_KV = 200, 3  # arm / gripper position servos; with kp 25 the arms sagged 5 deg
+ARM_TORQUE = 2.9        # N m, STS3215
 SUSP_TRAVEL = 0.012     # m, drive wheel spring travel
 SUSP_STIFFNESS = 34000  # N/m; reference 0 gives the 4 mm preload (~136 N per wheel)
 
@@ -191,6 +195,57 @@ def add_decals(path, decals):
     t.write(path, xml_declaration=True, encoding="utf-8")
 
 
+def check_motors(m):
+    """Drive every motor of the physical model and check the joint follows.
+    Returns a list of problems (empty = all good)."""
+    def fresh():
+        d = mujoco.MjData(m)
+        for side in ("left", "right"):  # arms in the ready pose, like on the robot
+            for k, v in (("shoulder", 1.0), ("elbow", -1.2), ("wrist_flex", 0.4)):
+                n = f"arm_{side}_{k}_joint"
+                d.ctrl[m.actuator(n).id] = v
+                d.qpos[m.joint(n).qposadr[0]] = v
+        mujoco.mj_forward(m, d)
+        return d
+
+    def run(d, seconds):
+        for _ in range(int(seconds / m.opt.timestep)):
+            mujoco.mj_step(m, d)
+
+    problems = []
+    for i in range(m.nu):
+        a = m.actuator(i)
+        if m.actuator_biastype[i] != mujoco.mjtBias.mjBIAS_AFFINE or a.name.startswith("wheel"):
+            continue  # position servos only
+        j = m.joint(m.actuator_trnid[i, 0])
+        lo, hi = m.actuator_ctrlrange[i]
+        target = lo + 0.6 * (hi - lo)
+        d = fresh()
+        run(d, 0.5)
+        d.ctrl[i] = target
+        run(d, 3.0)
+        err = abs(d.qpos[j.qposadr[0]] - target)
+        if err > max(0.05, 0.05 * (hi - lo)):
+            problems.append(f"{a.name}: commanded {target:.3f}, joint at "
+                            f"{d.qpos[j.qposadr[0]]:.3f}")
+    d = fresh()
+    run(d, 0.5)
+    base = m.body("base_link").id
+    start = d.xpos[base].copy()
+    heading = lambda: math.atan2(d.xmat[base][3], d.xmat[base][0])  # noqa: E731
+    h0 = heading()
+    for side in ("left", "right"):
+        d.ctrl[m.actuator(f"wheel_{side}").id] = 5.0
+    run(d, 3.0)
+    moved = d.xpos[base][:2] - start[:2]
+    forward = moved @ np.array([math.cos(h0), math.sin(h0)])
+    turned = abs((heading() - h0 + math.pi) % (2 * math.pi) - math.pi)
+    if forward < 0.8 or turned > 0.15:  # 5 rad/s * 0.085 m * 3 s = 1.3 m
+        problems.append(f"wheels +5/+5 rad/s for 3 s: moved {forward:.2f} m forward, "
+                        f"turned {math.degrees(turned):.0f} deg")
+    return problems
+
+
 def is_stale():
     """True if the generated model is missing or older than the URDF / this script."""
     if not (os.path.exists(ROBOT_XML) and os.path.exists(SCENE_XML)):
@@ -254,6 +309,12 @@ def convert(verbose=True):
             j.set("stiffness", str(SUSP_STIFFNESS))
             j.set("springref", "0")
             j.set("damping", "400")
+        elif n == "lift_joint":
+            # The URDF's effort="200" is a placeholder. MuJoCo turns it into a joint
+            # limit (actuatorfrcrange) that clamps the lift motor below the weight it
+            # carries (carriage + both arms = 37.5 kg = 368 N), so the lift never moved.
+            # Let the motor's own limit (LIFT_FORCE) decide instead.
+            j.set("actuatorfrcrange", f"-{LIFT_FORCE:g} {LIFT_FORCE:g}")
 
     # base_link's mesh is concave (box + tower); its convex hull swallows the
     # wheels and arms. Ignore base_link <-> rest-of-robot contacts.
@@ -266,16 +327,23 @@ def convert(verbose=True):
     act = ET.SubElement(r, "actuator")
     lift = urdf_joints["lift_joint"].find("limit")
     ET.SubElement(act, "position", name="lift", joint="lift_joint", kp="200000", kv="10000",
-                  ctrlrange=f"{lift.get('lower')} {lift.get('upper')}", forcerange="-2000 2000")
+                  ctrlrange=f"{lift.get('lower')} {lift.get('upper')}",
+                  forcerange=f"-{LIFT_FORCE:g} {LIFT_FORCE:g}")
     for name, j in urdf_joints.items():
         if name.startswith("arm_") and j.get("type") == "revolute":
             lim = j.find("limit")
-            ET.SubElement(act, "position", name=name, joint=name, kp="25", kv="0.5",
-                          ctrlrange=f"{lim.get('lower')} {lim.get('upper')}",
-                          forcerange="-2.9 2.9")
+            ET.SubElement(act, "position", name=name, joint=name, kp=str(ARM_KP),
+                          kv=str(ARM_KV), ctrlrange=f"{lim.get('lower')} {lim.get('upper')}",
+                          forcerange=f"-{ARM_TORQUE:g} {ARM_TORQUE:g}")
     for side in ("left", "right"):
+        # The URDF mirrors the right wheel (axis -y). gear -1 makes a positive command
+        # mean "forward" on both wheels. Torque limit = the URDF effort.
+        j = urdf_joints[f"wheel_{side}_joint"]
+        axis_y = float(j.find("axis").get("xyz").split()[1])
+        effort = float(j.find("limit").get("effort"))
         ET.SubElement(act, "velocity", name=f"wheel_{side}", joint=f"wheel_{side}_joint",
-                      kv="20", ctrlrange="-27 27", forcerange="-40 40")
+                      kv="20", ctrlrange="-27 27", forcerange=f"-{effort:g} {effort:g}",
+                      gear="-1" if axis_y < 0 else "1")
     t.write(SCENE_XML, xml_declaration=True, encoding="utf-8")
 
     # Sanity check: load and simulate 2 s
@@ -286,6 +354,9 @@ def convert(verbose=True):
         mujoco.mj_step(m, d)
     if abs(d.qpos[2]) > 0.05:
         raise RuntimeError(f"Physical model does not stand still (base height {d.qpos[2]:.3f} m)")
+    problems = check_motors(m)
+    if problems:
+        raise RuntimeError("Physical model motors do not work:\n  " + "\n  ".join(problems))
     with open(_MARKER, "w") as f:
         f.write(DESCRIPTION)
     if verbose:
@@ -313,9 +384,16 @@ def export(verbose=True):
 
     out = os.path.join(ROBOCASA_DIR, "assets")
     mesh_out = os.path.join(out, "meshes")
-    if os.path.isdir(out):
-        shutil.rmtree(out)
-    os.makedirs(mesh_out)
+    # Empty the folders but keep them: a shell or viewer sitting in assets/ keeps working.
+    for d in (mesh_out, out):
+        if os.path.isdir(d):
+            for name in os.listdir(d):
+                p = os.path.join(d, name)
+                if os.path.isfile(p) or os.path.islink(p):
+                    os.remove(p)
+                elif p != mesh_out:
+                    shutil.rmtree(p)
+    os.makedirs(mesh_out, exist_ok=True)
     copied = {}
 
     def copy_model(src, dst_name):

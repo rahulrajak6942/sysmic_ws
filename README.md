@@ -49,7 +49,7 @@ MuJoCo files in `sysmic_v2_robocasa/assets/` (they share `assets/meshes/`):
 | File | What it is |
 |---|---|
 | `robot.xml`, `base.xml`, `left_gripper.xml`, `right_gripper.xml`, `controller.json` | robosuite / RoboCasa robot |
-| `sysmic_v2_scene.xml` | physical MuJoCo model on a floor: motors, real wheels, casters, suspension. `python -m mujoco.viewer --mjcf=sysmic_v2_scene.xml` |
+| `sysmic_v2_scene.xml` | physical MuJoCo model on a floor: motors, real wheels, casters, suspension. `python -m mujoco.viewer --mjcf=sysmic_v2_scene.xml`, then the Control tab: lift, every arm / gripper joint, both wheels (positive = forward) |
 | `sysmic_v2.xml` | plain URDF to MJCF conversion |
 
 Details: [sysmic_v2_robocasa/README.md](src/sysmic_v2_sim/sysmic_v2_robocasa/README.md).
@@ -96,9 +96,23 @@ ros2 run joint_state_publisher_gui joint_state_publisher_gui --ros-args \
   -p zeros.arm_left_gripper_joint:=-0.17 -p zeros.arm_right_gripper_joint:=-0.17
 ```
 
-Sensors are switched on/off and configured in
-[`sensors.yaml`](src/sysmic_v2_sim/sysmic_v2_robocasa/sensors.yaml) (position,
-resolution, field of view, rate, range, noise, visible box). A camera is only
+### Sensors
+
+Every sensor that is `enabled` in
+[`sensors.yaml`](src/sysmic_v2_sim/sysmic_v2_robocasa/sensors.yaml) starts with the
+launch file; nothing else is needed. RViz shows both lidar scans and the head
+camera. Tick the other Image displays in RViz (head depth, tray, left / right
+gripper) or use `ros2 run rqt_image_view rqt_image_view` to see the other cameras.
+
+```bash
+ros2 topic hz /scan_top          # about 10 Hz
+ros2 topic echo /imu --once
+ros2 launch sysmic_v2_sim sim.launch.py sensors:=/path/to/my_sensors.yaml   # another config
+```
+
+`sensors.yaml` switches each sensor (or one D435i stream) on or off and sets its
+position, resolution, field of view, rate, range, noise and visible box. Restart
+the launch after editing; nothing has to be rebuilt. A camera is only
 rendered while its topic has a subscriber. Each watched camera costs about 10 ms
 per frame, so with all five at 30 Hz the simulation runs at about 0.4x real time.
 Full details: [src/sysmic_v2_sim/README.md](src/sysmic_v2_sim/README.md).

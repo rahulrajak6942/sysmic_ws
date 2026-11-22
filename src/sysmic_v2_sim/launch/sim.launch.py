@@ -14,7 +14,7 @@ Starts four things:
 
 Do not activate conda in the terminal you launch from. The launch file finds the
 env's Python by itself; pass conda_python:=/path/to/envs/robocasa/bin/python if it
-is installed somewhere unusual.
+is installed somewhere unusual, or set SYSMIC_SIM_PYTHON (the Docker image does).
 
 Closing the simulation viewer (or Ctrl+C) stops everything.
 """
@@ -163,7 +163,9 @@ def launch_setup(context):
     arg = lambda name: LaunchConfiguration(name).perform(context)  # noqa: E731
 
     env_name = arg("conda_env")
-    python = arg("conda_python") or find_conda_python(env_name)
+    # conda_python:=..., else $SYSMIC_SIM_PYTHON (set in the Docker image), else the conda env
+    python = (arg("conda_python") or os.environ.get("SYSMIC_SIM_PYTHON")
+              or find_conda_python(env_name))
     if not python or not os.path.isfile(python):
         return [
             LogInfo(msg=(
