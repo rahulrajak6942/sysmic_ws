@@ -131,7 +131,7 @@ def main():
     )
     model.save(os.path.abspath(os.path.join(
         get_package_share_directory('sysmic_rl'),
-        '..', '..', '..',
+        '..', '..', '..', '..',
         'src',
         'sysmic_rl',
         'models',
